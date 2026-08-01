@@ -5,6 +5,7 @@ pubDate: 2026-08-01T09:00:00Z
 group: 'ai-that-has-to-be-right'
 type: 'guide'
 tags: ['ai', 'llm', 'architecture', 'machine-learning']
+ogImage: '/og/scaling-the-model-is-rarely-the-fix.png'
 draft: false
 ---
 

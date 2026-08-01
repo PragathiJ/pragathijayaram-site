@@ -5,6 +5,7 @@ pubDate: 2026-08-01
 group: 'production-engineering'
 type: 'investigation'
 tags: ['react-native', 'ios', 'debugging', 'fabric']
+ogImage: '/og/react-native-scrollview-recycling-bug.png'
 draft: true
 ---
 

@@ -5,6 +5,7 @@ pubDate: 2026-08-01T10:00:00Z
 group: 'ai-that-has-to-be-right'
 type: 'guide'
 tags: ['ai', 'llm', 'architecture', 'system-design']
+ogImage: '/og/when-not-to-use-an-llm.png'
 draft: false
 ---
 
