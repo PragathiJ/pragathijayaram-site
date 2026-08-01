@@ -1,0 +1,10 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "pragathijayaram-site",
+	"compatibility_date": "2026-08-01",
+	// Assets-only Worker: no server code runs. Cloudflare serves the static
+	// files Astro generates into ./dist straight from its edge network.
+	"assets": {
+		"directory": "./dist"
+	}
+}
