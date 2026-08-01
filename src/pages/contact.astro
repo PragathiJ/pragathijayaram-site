@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL, SOCIAL } from '../consts';
+---
+
+<Base title="Contact" description="How to reach Pragathi Jayaram.">
+	<h1>Contact</h1>
+	<p class="intro">
+		Email is best. I read everything and answer anything specific. If you are writing about work,
+		a short description of the problem is more useful than a brief.
+	</p>
+
+	<dl>
+		<div>
+			<dt>Email</dt>
+			<dd><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></dd>
+		</div>
+		<div>
+			<dt>GitHub</dt>
+			<dd><a href={SOCIAL.github} rel="me noopener">PragathiJ</a></dd>
+		</div>
+		<div>
+			<dt>LinkedIn</dt>
+			<dd><a href={SOCIAL.linkedin} rel="me noopener">pragathi-jayaram</a></dd>
+		</div>
+	</dl>
+</Base>
+
+<style>
+	.intro {
+		color: var(--muted);
+		margin-bottom: 2rem;
+	}
+
+	dl {
+		margin: 0;
+		border-top: 1px solid var(--hairline);
+	}
+
+	dl div {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem 1rem;
+		padding-block: 0.75rem;
+		border-bottom: 1px solid var(--hairline);
+	}
+
+	dt {
+		flex: 0 0 6rem;
+		color: var(--muted);
+		font-size: 0.9375rem;
+	}
+
+	dd {
+		margin: 0;
+		flex: 1 1 16rem;
+	}
+</style>

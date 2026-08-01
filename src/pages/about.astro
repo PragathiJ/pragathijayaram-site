@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL, SOCIAL } from '../consts';
+
+const FACTS = [
+	['Based in', 'Stuttgart area, Germany'],
+	['Education', 'MSc Communication Engineering, TU Munich'],
+	['Previously', 'Bosch, Mercedes-Benz Tech Motion'],
+	['Now', 'Building Anovi, writing, and taking on selected work'],
+	['Works in', 'Python, TypeScript, React Native, FastAPI, PostgreSQL'],
+];
+---
+
+<Base
+	title="About"
+	description="AI/ML engineer in Germany. Machine learning in automotive and industrial systems, then a nutrition app shipped solo."
+>
+	<h1>About</h1>
+
+	<div class="prose">
+		<p>
+			I am an AI/ML engineer. Before this I built machine learning systems in automotive and
+			industrial settings: computer vision, gaze and pose models, explainable AI, transformer and
+			speech systems, and the unglamorous data work underneath all of it. I studied Communication
+			Engineering at TU Munich and wrote my thesis on AI applied to radar.
+		</p>
+		<p>
+			Then I started building Anovi, a nutrition and meal planning app, on my own. Not because of a
+			health scare, but because of a gap I kept running into: nutrition advice is usually accurate
+			and rarely usable. It ignores what is in your kitchen, what is expiring, what you have time to
+			cook, and what you actually like. The interesting problem was never the model. It was
+			translating evidence into a decision someone can make on a Tuesday evening.
+		</p>
+		<p>
+			Building it alone meant doing all of it. The schema, the recommendation logic, the LLM
+			pipeline, the payments, the German localisation, the privacy impact assessment, the App Store
+			submission. That range is the reason this site exists. I learned things that are worth writing
+			down, and most of them are not the things people put in conference talks.
+		</p>
+		<p>
+			What I write here follows one rule: every claim has a receipt. If I say a bug was in the
+			framework, the issue number is in the article. If I say an approach failed, the article
+			explains how I know. That includes the work I reverted and the detectors that gave me false
+			positives.
+		</p>
+		<p>
+			I am not a nutritionist or a doctor, and Anovi is built to stay on the right side of that line.
+		</p>
+	</div>
+
+	<dl class="facts">
+		{
+			FACTS.map(([label, value]) => (
+				<div>
+					<dt>{label}</dt>
+					<dd>{value}</dd>
+				</div>
+			))
+		}
+	</dl>
+
+	<p class="links">
+		<a href={`mailto:${CONTACT_EMAIL}`}>Email</a>
+		<a href={SOCIAL.github} rel="me noopener">GitHub</a>
+		<a href={SOCIAL.linkedin} rel="me noopener">LinkedIn</a>
+	</p>
+</Base>
+
+<style>
+	.facts {
+		margin: 2.5rem 0;
+		border-top: 1px solid var(--hairline);
+	}
+
+	.facts div {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem 1rem;
+		padding-block: 0.6rem;
+		border-bottom: 1px solid var(--hairline);
+	}
+
+	dt {
+		flex: 0 0 9rem;
+		color: var(--muted);
+		font-size: 0.9375rem;
+	}
+
+	dd {
+		margin: 0;
+		flex: 1 1 16rem;
+	}
+
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.5rem;
+		font-size: 0.9375rem;
+	}
+</style>

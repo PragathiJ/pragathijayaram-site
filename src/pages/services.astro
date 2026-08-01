@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL } from '../consts';
+import { OFFERS } from '../data/services';
+---
+
+<Base
+	title="Work with me"
+	description="Mobile apps, AI features, backend engineering, zero to one product work, and technical writing."
+>
+	<h1>Work with me</h1>
+	<p class="intro">
+		The kinds of work I take on. If one of them matches what you need, email me and describe the
+		problem.
+	</p>
+
+	<dl>
+		{
+			OFFERS.map((offer) => (
+				<div class="offer">
+					<dt>{offer.title}</dt>
+					<dd>{offer.description}</dd>
+				</div>
+			))
+		}
+	</dl>
+
+	<p class="cta">
+		<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+	</p>
+</Base>
+
+<style>
+	.intro {
+		color: var(--muted);
+		margin-bottom: 2.5rem;
+	}
+
+	dl {
+		margin: 0 0 2.5rem;
+	}
+
+	.offer {
+		padding-block: 1.25rem;
+		border-bottom: 1px solid var(--hairline);
+	}
+
+	dt {
+		font-family: var(--font-serif);
+		font-size: var(--step-1);
+		margin-bottom: 0.35rem;
+	}
+
+	dd {
+		margin: 0;
+		color: var(--muted);
+	}
+
+	.cta {
+		font-size: var(--step-1);
+		font-family: var(--font-serif);
+	}
+</style>

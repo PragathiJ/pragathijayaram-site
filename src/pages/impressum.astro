@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL } from '../consts';
+---
+
+<Base title="Impressum" description="Anbieterkennzeichnung nach § 5 DDG.">
+	<h1>Impressum</h1>
+
+	<div class="prose">
+		<h2>Angaben gemäß § 5 DDG</h2>
+		<p>
+			Pragathi Jayaram<br />
+			Karlsruher Straße 32<br />
+			70771 Leinfelden-Echterdingen<br />
+			Deutschland
+		</p>
+
+		<h2>Kontakt</h2>
+		<p>E-Mail: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+
+		<h2>Umsatzsteuer-Identifikationsnummer</h2>
+		<p>Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz: DE462500932</p>
+
+		<h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+		<p>Pragathi Jayaram (Anschrift wie oben)</p>
+
+		<h2>Haftung für Inhalte</h2>
+		<p>
+			Als Diensteanbieterin bin ich gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach
+			den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG bin ich als Diensteanbieterin
+			jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen
+			oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Bei
+			Bekanntwerden von Rechtsverletzungen werden entsprechende Inhalte umgehend entfernt.
+		</p>
+
+		<h2>Haftung für Links</h2>
+		<p>
+			Dieses Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen
+			Einfluss habe. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder
+			Betreiber verantwortlich. Bei Bekanntwerden von Rechtsverletzungen werden entsprechende Links
+			umgehend entfernt.
+		</p>
+
+		<h2>Urheberrecht</h2>
+		<p>
+			Die durch die Seitenbetreiberin erstellten Inhalte und Werke auf diesen Seiten unterliegen dem
+			deutschen Urheberrecht. Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung
+			außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung der jeweiligen
+			Autorin bzw. Erstellerin. Sollten Sie auf eine Urheberrechtsverletzung aufmerksam werden,
+			bitte ich um einen entsprechenden Hinweis.
+		</p>
+
+		<h2>Streitbeilegung</h2>
+		<p>
+			Ich bin nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer
+			Verbraucherschlichtungsstelle gemäß § 36 VSBG teilzunehmen.
+		</p>
+	</div>
+
+	<p class="meta stand">Stand: 1. August 2026</p>
+</Base>
+
+<style>
+	.stand {
+		border-top: 1px solid var(--hairline);
+		padding-top: 1.5rem;
+		margin-top: 2.5rem;
+	}
+</style>

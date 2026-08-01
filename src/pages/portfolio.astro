@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import { BUILDING, PROJECTS } from '../data/portfolio';
+---
+
+<Base
+	title="Portfolio"
+	description="Anovi, a nutrition app shipped solo from schema to App Store, and an upstream React Native issue with a public reproducer."
+>
+	<h1>Portfolio</h1>
+	<p class="intro">Two pieces of work with public receipts, and what I am building next.</p>
+
+	{
+		PROJECTS.map((project) => (
+			<article>
+				<h2>{project.name}</h2>
+				<p class="meta">{project.role}</p>
+				<p>{project.description}</p>
+				<p class="links">
+					{project.links.map((link) => (
+						<a href={link.href} rel="noopener">
+							{link.label}
+						</a>
+					))}
+				</p>
+			</article>
+		))
+	}
+
+	<section>
+		<h2>Currently building</h2>
+		<ul>
+			{BUILDING.map((item) => <li>{item}</li>)}
+		</ul>
+	</section>
+</Base>
+
+<style>
+	.intro {
+		color: var(--muted);
+		margin-bottom: 3rem;
+	}
+
+	article,
+	section {
+		padding-bottom: 2rem;
+		margin-bottom: 2rem;
+		border-bottom: 1px solid var(--hairline);
+	}
+
+	section {
+		border-bottom: 0;
+	}
+
+	h2 {
+		font-size: var(--step-1);
+		margin-bottom: 0.25rem;
+	}
+
+	.meta {
+		margin-bottom: 0.75rem;
+	}
+
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.25rem;
+		font-size: 0.9375rem;
+		margin: 0;
+	}
+
+	ul {
+		margin: 0;
+		padding-left: 1.25rem;
+		color: var(--muted);
+	}
+
+	li {
+		margin-bottom: 0.5rem;
+	}
+</style>

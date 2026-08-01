@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL } from '../consts';
+---
+
+<Base
+	title="Datenschutzerklärung"
+	description="Informationen zur Verarbeitung personenbezogener Daten auf dieser Website."
+>
+	<h1>Datenschutzerklärung</h1>
+
+	<div class="prose">
+		<h2>1. Verantwortliche</h2>
+		<p>
+			Pragathi Jayaram<br />
+			Karlsruher Straße 32<br />
+			70771 Leinfelden-Echterdingen<br />
+			Deutschland<br />
+			E-Mail: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+		</p>
+
+		<h2>2. Grundsatz</h2>
+		<p>
+			Diese Website setzt keine Cookies und speichert keine Informationen auf Ihrem Endgerät. Es
+			bestehen keine Nutzerkonten, keine Formulare und kein seitenübergreifendes Tracking. Eine
+			Einwilligung nach § 25 TDDDG ist daher nicht erforderlich.
+		</p>
+
+		<h2>3. Hosting und Server-Logfiles</h2>
+		<p>
+			Die Website wird von Cloudflare, Inc. bereitgestellt. Bei jedem Abruf verarbeitet Cloudflare
+			technische Zugriffsdaten, insbesondere IP-Adresse, Datum und Uhrzeit, aufgerufene Adresse,
+			Referrer, User-Agent und HTTP-Status. Diese Verarbeitung dient der Auslieferung der Seiten,
+			der Stabilität und der Abwehr von Angriffen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO;
+			das berechtigte Interesse liegt im sicheren und störungsfreien Betrieb.
+		</p>
+		<p>
+			Cloudflare ist Auftragsverarbeiterin nach Art. 28 DSGVO. Übermittlungen in die Vereinigten
+			Staaten werden auf Standardvertragsklauseln und die Zertifizierung nach dem EU-US Data Privacy
+			Framework gestützt.
+		</p>
+
+		<h2>4. Reichweitenmessung</h2>
+		<p>
+			Zur Reichweitenmessung wird Cloudflare Web Analytics eingesetzt. Erfasst werden aufgerufene
+			Seiten, Referrer, Land, Browser und Gerätetyp in aggregierter Form. Es werden keine Cookies
+			gesetzt, keine Kennungen auf dem Endgerät gespeichert und keine Profile über Websites hinweg
+			gebildet. Eine Identifizierung einzelner Personen ist nicht möglich und nicht beabsichtigt.
+			Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; das berechtigte Interesse liegt in der
+			Kenntnis darüber, welche Inhalte abgerufen werden.
+		</p>
+
+		<h2>5. Kontaktaufnahme per E-Mail</h2>
+		<p>
+			Nachrichten an {CONTACT_EMAIL} werden über Cloudflare Email Routing an ein Gmail-Postfach
+			(Google Ireland Limited) weitergeleitet. Verarbeitet werden die von Ihnen mitgeteilten Angaben
+			sowie die technischen Daten der Nachricht. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO, bei
+			Anfragen zur Anbahnung eines Vertrags zusätzlich Art. 6 Abs. 1 lit. b DSGVO. Nachrichten
+			werden gelöscht, sobald sie nicht mehr benötigt werden und keine gesetzlichen
+			Aufbewahrungspflichten entgegenstehen.
+		</p>
+
+		<h2>6. Externe Links</h2>
+		<p>
+			Die Website verlinkt auf externe Angebote, etwa GitHub und LinkedIn. Für die
+			Datenverarbeitung auf diesen Seiten sind die jeweiligen Anbieter verantwortlich. Ein Aufruf
+			erfolgt erst, wenn Sie den Link anklicken.
+		</p>
+
+		<h2>7. Ihre Rechte</h2>
+		<p>
+			Sie haben das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17),
+			Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) sowie das Recht, der
+			Verarbeitung auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO zu widersprechen (Art. 21 DSGVO).
+		</p>
+		<p>
+			Ihnen steht ein Beschwerderecht bei einer Aufsichtsbehörde zu. Zuständig ist: Der
+			Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg,
+			Heilbronner Straße 35, 70191 Stuttgart.
+		</p>
+	</div>
+
+	<p class="meta stand">Stand: 1. August 2026</p>
+</Base>
+
+<style>
+	.stand {
+		border-top: 1px solid var(--hairline);
+		padding-top: 1.5rem;
+		margin-top: 2.5rem;
+	}
+</style>
