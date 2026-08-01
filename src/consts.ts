@@ -1,6 +1,6 @@
 export const SITE_TITLE = 'Pragathi Jayaram';
 export const SITE_DESCRIPTION =
-	'AI/ML engineer. I build AI and mobile products end to end, and publish the evidence of how they were built.';
+	'Production AI, mobile engineering, and the evidence behind both. Articles and project notes by Pragathi Jayaram, an AI/ML engineer based in Germany.';
 
 export const DEFAULT_OG_IMAGE = '/og-default.png';
 

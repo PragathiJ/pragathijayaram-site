@@ -8,16 +8,21 @@ const latest = (await getPublishedArticles()).slice(0, 3);
 ---
 
 <Base title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<h1>
-		I build AI and mobile products end to end, and publish the evidence of how they were built.
-	</h1>
-	<p class="intro">
-		I'm an AI/ML engineer based in Germany. I've built machine learning systems in automotive and
-		industrial settings, and most recently shipped Anovi, a nutrition app, on my own, from the
-		database schema to the App Store. I write about production AI, mobile engineering, and building
-		software in regulated spaces. Mostly the parts that are hard: the bugs, the architecture calls,
-		and the compliance work nobody warns you about.
-	</p>
+	<h1>Production AI, mobile engineering, and the evidence behind both.</h1>
+	<div class="intro">
+		<p>Hey, I'm Pragathi, an AI/ML engineer based in Germany.</p>
+		<p>
+			My experience spans building machine learning systems for automotive and industrial
+			applications and shipping complete products independently. Most recently, I built and
+			launched Anovi, a full-stack nutrition app, from the database schema to the App Store.
+		</p>
+		<p>
+			This site is a living record of what it takes to build and ship software in complex spaces. I
+			write about production AI, mobile architecture, and navigating technical and regulatory
+			constraints, documenting the breakthroughs, breaking points, and engineering trade-offs along
+			the way.
+		</p>
+	</div>
 
 	{
 		latest.length > 0 && (
@@ -40,6 +45,10 @@ const latest = (await getPublishedArticles()).slice(0, 3);
 	.intro {
 		color: var(--muted);
 		margin-bottom: 3rem;
+	}
+
+	.intro p:last-child {
+		margin-bottom: 0;
 	}
 
 	section {

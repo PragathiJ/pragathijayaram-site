@@ -5,27 +5,34 @@ export interface Link {
 
 export interface Project {
 	name: string;
-	role: string;
-	description: string;
+	meta: string;
+	body: string[];
 	links: Link[];
 }
 
 export const PROJECTS: Project[] = [
 	{
-		name: 'Anovi',
-		role: 'Founder. Everything from schema to App Store.',
-		description:
-			'A nutrition and meal planning app for iOS, built and shipped solo. React Native and Expo on the front, FastAPI and PostgreSQL behind it. I designed the data model, the meal plan generator, the LLM pipeline for ingredient extraction, the subscription layer, the German and English localisation, and the privacy and consumer law work required to launch it in Germany.',
-		links: [{ href: 'https://www.anoviwellness.com', label: 'anoviwellness.com' }],
+		name: 'Anovi, a nutrition and meal planning app',
+		meta: 'Sole developer · React Native · FastAPI · PostgreSQL · Germany',
+		body: [
+			'Anovi plans meals around what someone already has, what they like, and what their nutrition targets still need. It connects pantry stock, grocery lists, recipes and nutrient gaps into a single flow, with an LLM pipeline that turns free-text meal logs into structured ingredients, and a generator that ranks recipes against several competing objectives at once.',
+			'The work covered the PostgreSQL schema and FastAPI backend, the React Native app, the subscription and paywall layer, German and English localisation, and the privacy, consumer law and App Store requirements that decide whether a product in this space can launch at all.',
+		],
+		links: [{ href: 'https://www.anoviwellness.com', label: 'Visit the site' }],
 	},
 	{
-		name: 'react-native#57755',
-		role: 'Upstream issue and reproducer.',
-		description:
-			'A scroll view in React Native’s new architecture keeps a keyboard observer and an inset flag across view recycling, so a modal opened after a keyboard interaction scrolls into empty space. I traced it in production, reduced it to a three-file reproducer with an automated detector, confirmed it on the latest stable release, and filed it upstream.',
+		name: 'Tracing a React Native iOS recycling bug',
+		meta: 'Production debugging · React Native · iOS · Open source',
+		body: [
+			'A production UI failure caused newly opened screens to scroll into persistent blank space. I traced the behaviour into React Native’s Fabric implementation and found that keyboard-inset state could survive native ScrollView recycling.',
+			'I reduced the failure to a dependency-free reproducer with automated detection, verified it across multiple React Native releases, documented the source-level mechanism and control cases, and filed the investigation upstream as React Native issue #57755.',
+		],
 		links: [
-			{ href: 'https://github.com/facebook/react-native/issues/57755', label: 'The issue' },
-			{ href: 'https://github.com/PragathiJ/rn-aaki-recycle-repro', label: 'Reproducer' },
+			{
+				href: 'https://github.com/facebook/react-native/issues/57755',
+				label: 'Read the investigation',
+			},
+			{ href: 'https://github.com/PragathiJ/rn-aaki-recycle-repro', label: 'Explore the reproducer' },
 		],
 	},
 ];

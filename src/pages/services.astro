@@ -6,24 +6,23 @@ import { OFFERS } from '../data/services';
 
 <Base
 	title="Work with me"
-	description="Mobile apps, AI features, backend engineering, zero to one product work, and technical writing."
+	description="Selected work across mobile apps, production AI features, backend engineering, zero to one product development, and technical writing."
 >
 	<h1>Work with me</h1>
 	<p class="intro">
-		The kinds of work I take on. If one of them matches what you need, email me and describe the
-		problem.
+		I take on selected projects where I can contribute across engineering, product, and delivery. If
+		one of these matches what you are building, email me with the problem, the current state, and
+		what you need help shipping.
 	</p>
 
-	<dl>
-		{
-			OFFERS.map((offer) => (
-				<div class="offer">
-					<dt>{offer.title}</dt>
-					<dd>{offer.description}</dd>
-				</div>
-			))
-		}
-	</dl>
+	{
+		OFFERS.map((offer) => (
+			<section>
+				<h2>{offer.title}</h2>
+				<p>{offer.description}</p>
+			</section>
+		))
+	}
 
 	<p class="cta">
 		<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
@@ -32,32 +31,28 @@ import { OFFERS } from '../data/services';
 
 <style>
 	.intro {
-		color: var(--muted);
 		margin-bottom: 2.5rem;
 	}
 
-	dl {
-		margin: 0 0 2.5rem;
-	}
-
-	.offer {
-		padding-block: 1.25rem;
+	section {
+		padding-bottom: 1.5rem;
+		margin-bottom: 1.5rem;
 		border-bottom: 1px solid var(--hairline);
 	}
 
-	dt {
-		font-family: var(--font-serif);
+	h2 {
 		font-size: var(--step-1);
-		margin-bottom: 0.35rem;
+		margin-bottom: 0.4rem;
 	}
 
-	dd {
+	section p {
 		margin: 0;
 		color: var(--muted);
 	}
 
 	.cta {
-		font-size: var(--step-1);
 		font-family: var(--font-serif);
+		font-size: var(--step-1);
+		margin-top: 2rem;
 	}
 </style>

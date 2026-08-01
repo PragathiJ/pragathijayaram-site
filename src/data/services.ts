@@ -7,26 +7,26 @@ export const OFFERS: Offer[] = [
 	{
 		title: 'Mobile apps, end to end',
 		description:
-			'React Native and Expo, from the first screen to a released build, including the store work most projects underestimate.',
+			'React Native and Expo development from product architecture and the first screen through testing, release builds, and App Store submission, including the store work and edge cases that projects often underestimate.',
 	},
 	{
-		title: 'AI features that survive contact with users',
+		title: 'AI features that hold up in production',
 		description:
-			'LLM features with grounding, evaluation, cost control and versioned prompts, so the output holds up when it reaches real people.',
+			'AI and LLM features designed for real users, with grounding, evaluation, structured outputs, cost and latency controls, prompt versioning, failure handling, and the monitoring needed after release.',
 	},
 	{
 		title: 'Backend engineering',
 		description:
-			'FastAPI and PostgreSQL, API and webhook reliability, idempotency, connection pooling and the failure modes that only appear under load.',
+			'FastAPI and PostgreSQL systems, including API design, data modelling, authentication, background jobs, webhook reliability, idempotency, connection management, and the failure modes that only appear under real load.',
 	},
 	{
 		title: 'Product development, zero to one',
 		description:
-			'Taking an idea to a shipped product, including the privacy, consumer law and store requirements that decide whether it can launch at all.',
+			'Turning an early idea into a usable, released product. This can include product scoping, technical architecture, frontend and backend implementation, analytics, subscriptions, privacy requirements, and the platform rules that determine whether a product can launch.',
 	},
 	{
 		title: 'Technical writing',
 		description:
-			'Deep-dive engineering articles with receipts, written from the actual work rather than from a brief.',
+			'In-depth engineering articles, case studies, and technical documentation grounded in actual implementation work, including the architecture decisions, failed approaches, debugging process, and evidence behind the final result.',
 	},
 ];

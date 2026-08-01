@@ -33,7 +33,12 @@ export function rowsByGroup(articles: Article[]): Map<string, Row[]> {
 		rows.get(article.data.group)?.push(toRow(article));
 	}
 
+	// A planned entry stays listed until its article publishes. In dev, where
+	// drafts render, skip the planned row so the title is not shown twice.
+	const published = new Set(articles.map((article) => article.data.title));
+
 	for (const planned of PLANNED) {
+		if (published.has(planned.title)) continue;
 		rows.get(planned.group)?.push({ title: planned.title });
 	}
 
