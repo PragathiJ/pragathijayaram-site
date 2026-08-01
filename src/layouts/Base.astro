@@ -1,0 +1,49 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	ogImage?: string;
+	pubDate?: Date;
+}
+
+const { title, description, ogImage, pubDate } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} ogImage={ogImage} pubDate={pubDate} />
+	</head>
+	<body>
+		<a href="#main" class="skip">Skip to content</a>
+		<Header />
+		<main id="main" class="wrap">
+			<slot />
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		padding-block: 3rem 4rem;
+	}
+
+	.skip {
+		position: absolute;
+		left: -9999px;
+	}
+
+	.skip:focus {
+		left: 1rem;
+		top: 1rem;
+		z-index: 1;
+		background: var(--bg);
+		padding: 0.5rem 0.75rem;
+		border: 1px solid var(--hairline);
+	}
+</style>

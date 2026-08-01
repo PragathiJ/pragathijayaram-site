@@ -1,0 +1,67 @@
+---
+import Base from './Base.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { getGroup } from '../data/groups';
+import type { Article } from '../lib/articles';
+
+interface Props {
+	article: Article;
+}
+
+const { article } = Astro.props;
+const { title, description, pubDate, updatedDate, group, type, ogImage } = article.data;
+const parent = getGroup(group);
+---
+
+<Base title={title} description={description} ogImage={ogImage} pubDate={pubDate}>
+	<article>
+		<p class="meta breadcrumb">
+			<a href={`/articles#${group}`}>{parent?.name}</a>
+		</p>
+		<h1>{title}</h1>
+		<p class="meta byline">
+			<FormattedDate date={pubDate} />
+			<span aria-hidden="true">·</span>
+			<span>{type}</span>
+			{
+				updatedDate && (
+					<span>
+						Updated <FormattedDate date={updatedDate} />
+					</span>
+				)
+			}
+		</p>
+		<div class="prose">
+			<slot />
+		</div>
+	</article>
+	<p class="meta back"><a href="/articles">All articles</a></p>
+</Base>
+
+<style>
+	.breadcrumb {
+		margin-bottom: 0.5rem;
+	}
+
+	.breadcrumb a {
+		color: var(--muted);
+		text-decoration: none;
+	}
+
+	.breadcrumb a:hover {
+		color: var(--ink);
+	}
+
+	.byline {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-bottom: 2rem;
+	}
+
+	.back {
+		border-top: 1px solid var(--hairline);
+		padding-top: 1.5rem;
+		margin-top: 3rem;
+	}
+</style>

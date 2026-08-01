@@ -1,0 +1,31 @@
+---
+interface Props {
+	status: 'published' | 'planned';
+}
+
+const { status } = Astro.props;
+const label = status === 'published' ? 'Published' : 'Planned';
+---
+
+<span class:list={['pill', status]}>{label}</span>
+
+<style>
+	.pill {
+		display: inline-block;
+		font-size: 0.75rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		border: 1px solid currentColor;
+		border-radius: 999px;
+		padding: 0.1rem 0.5rem;
+		line-height: 1.4;
+	}
+
+	.published {
+		color: var(--accent);
+	}
+
+	.planned {
+		color: var(--muted);
+	}
+</style>

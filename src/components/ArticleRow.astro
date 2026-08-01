@@ -1,0 +1,69 @@
+---
+import FormattedDate from './FormattedDate.astro';
+import Pill from './Pill.astro';
+
+export interface Row {
+	title: string;
+	href?: string;
+	description?: string;
+	date?: Date;
+	type?: string;
+}
+
+const { title, href, description, date, type } = Astro.props as Row;
+const status = href ? 'published' : 'planned';
+---
+
+<article class="row">
+	<h3>{href ? <a href={href}>{title}</a> : <span>{title}</span>}</h3>
+	<p class="meta">
+		{date && <FormattedDate date={date} />}
+		{date && type && <span aria-hidden="true">·</span>}
+		{type && <span>{type}</span>}
+		<Pill status={status} />
+	</p>
+	{description && <p class="description">{description}</p>}
+</article>
+
+<style>
+	.row {
+		padding-block: 1.25rem;
+		border-bottom: 1px solid var(--hairline);
+	}
+
+	.row:last-child {
+		border-bottom: 0;
+	}
+
+	h3 {
+		font-size: var(--step-1);
+		margin-bottom: 0.35rem;
+	}
+
+	h3 a {
+		color: var(--ink);
+		text-decoration: none;
+	}
+
+	h3 a:hover {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+
+	h3 span {
+		color: var(--muted);
+	}
+
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: 0.35rem;
+	}
+
+	.description {
+		margin: 0;
+		color: var(--muted);
+	}
+</style>

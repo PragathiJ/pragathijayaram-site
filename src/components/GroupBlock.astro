@@ -1,0 +1,40 @@
+---
+import ArticleRow, { type Row } from './ArticleRow.astro';
+import type { Group } from '../data/groups';
+
+interface Props {
+	group: Group;
+	rows: Row[];
+}
+
+const { group, rows } = Astro.props;
+const publishedCount = rows.filter((row) => row.href).length;
+---
+
+<section id={group.id}>
+	<h2>{group.name}</h2>
+	<p class="meta count">{publishedCount} of {rows.length} published</p>
+	<p class="blurb">{group.blurb}</p>
+	{rows.map((row) => <ArticleRow {...row} />)}
+</section>
+
+<style>
+	section {
+		margin-bottom: 3.5rem;
+	}
+
+	h2 {
+		border-bottom: 2px solid var(--ink);
+		padding-bottom: 0.35rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.count {
+		margin-bottom: 0.5rem;
+	}
+
+	.blurb {
+		color: var(--muted);
+		margin-bottom: 1rem;
+	}
+</style>
