@@ -21,6 +21,9 @@ const pageTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 <meta name="generator" content={Astro.generator} />
 
 <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+<!-- An exact-size PNG stops browsers reaching for the opaque apple-touch icon
+     when they want a crisp tab icon, which showed as a pale box on dark chrome. -->
+<link rel="icon" type="image/png" href="/icon-32.png" sizes="32x32" />
 <link rel="icon" type="image/png" href="/icon-192.png" sizes="192x192" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="sitemap" href="/sitemap-index.xml" />
