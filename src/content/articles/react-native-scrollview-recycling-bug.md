@@ -89,28 +89,16 @@ somewhere the viewport was not.
 
 ### What I can show, and what I cannot
 
-Everything above about the flag and the observer is in the source, and the
-behaviour that follows from it is measured further down.
+One thing here is unresolved. The assignment that sets the flag is guarded by a
+comparison against the previous owner's props, which suggests it should be
+cleared when the next component mounts, while the agitator test below shows the
+keyboard machinery still live on a view that has already mounted. I have not
+instrumented the mount path, so I cannot say which reading is incomplete.
 
-What I cannot yet show is the precise reason the flag is still set at the moment
-the handler runs. The assignment is guarded by a comparison:
-
-```objc
-if (oldScrollViewProps.automaticallyAdjustKeyboardInsets != newScrollViewProps.automaticallyAdjustKeyboardInsets) {
-  _automaticallyAdjustKeyboardInsets = newScrollViewProps.automaticallyAdjustKeyboardInsets;
-}
-```
-
-Reading 0.86.2, that comparison uses the previous owner's props, which suggests
-the flag should be cleared when the next component mounts. The agitator test
-below says the keyboard machinery is still live on a view that has already
-mounted. Those two do not agree, and I have not instrumented the mount path to
-settle which is incomplete.
-
-So take the mechanism as far as the evidence goes and no further. What is
+Take the mechanism as far as the evidence goes and no further. What is
 demonstrated is that a view returns to the pool armed and subscribed, and that
-the next owner pays for it. The exact path through the props diff is open, and I
-will update this once I have logged the flag on a device.
+the next owner pays for it. I will update this once I have logged the flag on a
+device.
 
 ### Why the values look clean
 
@@ -384,11 +372,10 @@ The `autoFocus={visible}` change matters more than it looks. Focusing on mount
 is what starts a keyboard animation during modal presentation, which is exactly
 the window the race needs.
 
-Two caveats. `KeyboardAvoidingView` with `behavior="padding"` inside a `Modal`
+One caveat. `KeyboardAvoidingView` with `behavior="padding"` inside a `Modal`
 behaves differently depending on presentation style, and often wants a
 `keyboardVerticalOffset` before it sits correctly, so treat this as a shape to
-adapt rather than a drop-in. And because of the `node_modules` point above, this
-option cleans your code but cannot promise the pool stays clean.
+adapt rather than a drop-in.
 
 **Option 2, if you need to keep the flag.** Dismiss the keyboard and let it
 settle before the screen unmounts. That is Control B, and it came back at zero in
