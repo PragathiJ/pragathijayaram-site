@@ -35,7 +35,11 @@ export const PLANNED: PlannedArticle[] = [
 		group: 'ai-that-has-to-be-right',
 		title: 'Structured data as the guardrail: a nutrition feature that cannot hallucinate',
 	},
-	{ group: 'production-engineering', title: 'The bug that survived being recycled' },
+	{
+		group: 'production-engineering',
+		title:
+			'The bug that survived being recycled: automaticallyAdjustKeyboardInsets and Fabric view recycling on iOS',
+	},
 	{
 		group: 'production-engineering',
 		title: 'Recurring logout forensics: global sign-out and a Keychain accessibility flag',

@@ -197,6 +197,17 @@ pre code {
 	margin-top: 0.5rem;
 }
 
+.prose figure img,
+.prose video {
+	display: block;
+	max-width: 100%;
+	max-height: 80vh;
+	width: auto;
+	margin-inline: auto;
+	border: 1px solid var(--hairline);
+	border-radius: 4px;
+}
+
 .prose table {
 	width: 100%;
 	border-collapse: collapse;
