@@ -15,7 +15,8 @@ below, and no amount of scrolling brought the content back. The only way out was
 to restart the app.
 
 It was not every modal, and not every time. It was any modal opened after the
-meal logging flow, which is the one flow with a text input in it. This surfaced
+meal logging flow, which is the one that dismisses itself on success while the
+keyboard is still up. This surfaced
 in the last round of testing before submitting the app for review, which is the
 worst possible time to find a bug that produces no error, no crash and no failed
 request.
@@ -83,8 +84,8 @@ That window is what the reproducer aims at, by closing the modal while the
 keyboard animation is still running. The next component to take that view out of
 the pool inherits the result, because the reset ran before the write, not after.
 
-That matched the shape of the failure. It only happened after the flow with the
-input, it only affected screens mounted later, and it looked like blank space
+That matched the shape of the failure. It only happened after that flow, it only
+affected screens mounted later, and it looked like blank space
 rather than an error, because the content was still there. It had been pushed
 somewhere the viewport was not.
 
