@@ -19,9 +19,14 @@ in the last round of testing before submitting the app for review, which is the
 worst possible time to find a bug that produces no error, no crash and no failed
 request.
 
-The trail ends at a React Native framework issue and a public reproducer. If you
-are here because your own app is doing this, the diagnosis and the fixes are at
-the end.
+The trail ends at a React Native framework issue and a public reproducer.
+
+> **Scope.** iOS only, New Architecture only. The code involved is the Fabric
+> iOS scroll view, so the old architecture and Android use different paths.
+> Reproduced on 0.81.4 and on 0.86.2, the latest stable at the time of writing,
+> and the relevant code is unchanged on the default branch. If you are here
+> because your own app is doing this, skip to
+> [If you think you have this](#if-you-think-you-have-this).
 
 ## The evidence that was missing
 
@@ -51,7 +56,7 @@ happens in `prepareForRecycle`.
 Recycling is only safe if the reset is complete. Anything left behind on the
 native view becomes the inheritance of a component that never asked for it.
 
-### The two things that are not reset
+### One flag, and an observer that trusts it
 
 Two pieces of `RCTScrollViewComponentView.mm` matter here. The first is the
 `_automaticallyAdjustKeyboardInsets` flag, which records whether this scroll
@@ -60,9 +65,35 @@ view opted into keyboard inset handling. The second is a
 native view and gated only by that flag. When the flag is on, the observer
 writes keyboard geometry into the scroll view's content inset and offset.
 
-`prepareForRecycle` clears neither of them.
+The observer is not itself a fault. A subscription that costs nothing while a
+flag tells it to stand down is a reasonable design. It becomes a fault the
+moment the flag can be wrong, because at that point nothing else is checking.
 
-The flag has a second problem, in `updateProps`:
+`prepareForRecycle` does not clear the flag.
+
+So a view can go back into the pool still marked as one that wants keyboard
+insets, with a live subscription to prove it. And a pooled view is not inert
+while it waits. It is an allocated scroll view with a registered observer, and
+the keyboard machinery has no idea that the component which asked for it is
+gone. A keyboard event arriving in that window has the handler write keyboard
+geometry into a view that currently belongs to nobody.
+
+That window is what the reproducer aims at, by closing the modal while the
+keyboard animation is still running. The next component to take that view out of
+the pool inherits the result, because the reset ran before the write, not after.
+
+That matched the shape of the failure. It only happened after the flow with the
+input, it only affected screens mounted later, and it looked like blank space
+rather than an error, because the content was still there. It had been pushed
+somewhere the viewport was not.
+
+### What I can show, and what I cannot
+
+Everything above about the flag and the observer is in the source, and the
+behaviour that follows from it is measured further down.
+
+What I cannot yet show is the precise reason the flag is still set at the moment
+the handler runs. The assignment is guarded by a comparison:
 
 ```objc
 if (oldScrollViewProps.automaticallyAdjustKeyboardInsets != newScrollViewProps.automaticallyAdjustKeyboardInsets) {
@@ -70,19 +101,16 @@ if (oldScrollViewProps.automaticallyAdjustKeyboardInsets != newScrollViewProps.a
 }
 ```
 
-The assignment only runs when the value changes. A recycled view that had the
-flag on is handed to a component that never sets it: old is false, new is false,
-no change, assignment skipped. The flag stays on from its previous owner.
+Reading 0.86.2, that comparison uses the previous owner's props, which suggests
+the flag should be cleared when the next component mounts. The agitator test
+below says the keyboard machinery is still live on a view that has already
+mounted. Those two do not agree, and I have not instrumented the mount path to
+settle which is incomplete.
 
-So a scroll view configured for keyboard insets inside a screen with a text
-input gets recycled into a modal that has neither. The modal inherits a live
-subscription. When a keyboard appears or dismisses anywhere in the app, that
-subscription adjusts the modal's insets, and the content moves out of view.
-
-That matched the shape of the failure. It only happened after the flow with the
-input, it only affected screens mounted later, and it looked like blank space
-rather than an error, because the content was still there. It had been pushed
-somewhere the viewport was not.
+So take the mechanism as far as the evidence goes and no further. What is
+demonstrated is that a view returns to the pool armed and subscribed, and that
+the next owner pays for it. The exact path through the props diff is open, and I
+will update this once I have logged the flag on a device.
 
 ### Why the values look clean
 
@@ -149,15 +177,19 @@ interpreted as evidence.
   <figcaption>
     Physical iPhone, iOS 26.5.2, Release build, React Native 0.86.2, New
     Architecture. Keyboard inset adjustment on, keyboard not dismissed before
-    close, close delay 0ms.
+    close, close-after delay set to 0ms, which in practice kills the modal about
+    120ms after it mounts.
   </figcaption>
 </figure>
 
 The victim's own geometry is on screen: content 840pt inside a 234pt viewport,
-so the furthest legitimate scroll offset is 606. It is parked at 810, with a
-bottom inset of 217.3 that it never asked for, while the keyboard is hidden.
-That gap is the blank space. Scrolling into it does not bounce back, because as
-far as the scroll view is concerned, the space is real.
+so the furthest legitimate scroll offset is 606. Add a bottom inset of 217.3
+that it never asked for, with the keyboard hidden, and it can now be scrolled to
+823.3. The reading in the screenshot, 810.3, is simply where that particular
+scroll came to rest inside the space that should not exist.
+
+That extra 217.3 is the blank space. Scrolling into it does not bounce back,
+because as far as the scroll view is concerned, the space is real.
 
 | Run | Configuration | Result |
 |---|---|---|
@@ -171,17 +203,19 @@ far as the scroll view is concerned, the space is real.
 > A reproducer that fails is a claim. A reproducer that fails, and stops failing
 > when you remove exactly one ingredient, is evidence.
 
-Both controls came back at zero, each from a force-quit fresh process. Turning
-the flag off is not enough on its own to cause the failure, and neither is a
-keyboard event. The failure needs a view configured for keyboard insets to be
-recycled while its observer is still live. Two ingredients, both required.
+Both controls came back at zero, each from a force-quit fresh process. Remove the
+flag and the failure stops. Leave the flag in place but dismiss the keyboard
+before the screen unmounts, and the failure stops. Each ingredient is necessary,
+and neither is sufficient on its own: the inset flag alone does nothing, and a
+keyboard event alone does nothing. The failure needs a view configured for
+keyboard insets to be recycled while its observer is still live.
 
 The persistence row is the one that matches the original complaint most closely.
 Once a process has a poisoned view in its pool, no later configuration change
 cleans it. Restarting the app was the only cure in production for the same
 reason.
 
-## Values or behaviour
+## Proving it is a live listener, not a stale value
 
 Controls prove which ingredients matter. They do not prove the mechanism.
 
@@ -229,7 +263,9 @@ There is a lesson in how nearly I got that step wrong. I first checked whether
 the reset code existed by searching the repository, and it appeared to be there.
 It was not there in the release I was running. It was on the default branch. A
 substring match across a checkout tells you nothing about the version your users
-are on. Verify at the version tag.
+are on. Verify at the version tag, which for this article means
+[`RCTScrollViewComponentView.mm` at v0.86.2](https://github.com/facebook/react-native/blob/v0.86.2/packages/react-native/React/Fabric/Mounting/ComponentViews/ScrollView/RCTScrollViewComponentView.mm#L363-L365),
+not the version of that file you get by searching GitHub.
 
 ## What happened after filing
 
@@ -241,8 +277,11 @@ the flag tracks props on every update, sets the flag to `NO` in
 and restores the vertical indicator insets that the reset had been leaving
 behind.
 
-That is the mechanism described in the issue, addressed at both of the points
-where it leaks.
+Note which of those changes is load bearing. Given the open question above, the
+one that matters is clearing the flag in `prepareForRecycle`, because that closes
+the window while the view sits in the pool. Removing the conditional is
+defensive, and cancelling animations addresses a write that lands after the reset
+has already run.
 
 It is worth being exact about its status. The pull request is an open draft. It
 has no reviewers, no review comments, and its author notes that the iOS native
@@ -264,17 +303,30 @@ with nothing focused. That flicker means the pool is already dirty and the next
 freshly mounted scroll view is the one that will break.
 
 The flicker is a hint. This is the test. Put it on a screen that sets no
-keyboard props at all, and read it with the keyboard hidden:
+keyboard props at all, scroll it with the keyboard hidden, and watch the console:
 
 ```tsx
+const reported = React.useRef(false);
+
 <ScrollView
   scrollEventThrottle={16}
   onScroll={(e) => {
-    const { bottom } = e.nativeEvent.contentInset;
-    if (bottom > 0) console.warn('phantom bottom inset', bottom);
+    // contentInset is iOS-only; on Android nativeEvent has no such field.
+    const bottom = e.nativeEvent.contentInset?.bottom ?? 0;
+    if (bottom > 0 && !reported.current) {
+      reported.current = true;
+      console.warn('phantom bottom inset', bottom);
+    }
   }}
-/>
+>
+  <View style={{ height: 2000 }} />
+</ScrollView>;
 ```
+
+Two details matter. The scroll view needs content taller than itself, or it will
+not scroll and `onScroll` will never fire, and you will conclude you are clean
+when you have not tested anything. And the reading has to be gated, because at a
+16ms throttle an ungated `console.warn` will bury the rest of your log.
 
 A scroll view that never opted into keyboard insets should report zero. Anything
 else means it is sitting on a native view that came out of the pool still armed.
@@ -287,7 +339,7 @@ Audit with two searches, not one:
 
 ```bash
 grep -rn "automaticallyAdjustKeyboardInsets" src/
-grep -rn "contentInset\|contentInsetAdjustmentBehavior" src/
+grep -rn "contentInset" src/   # also catches contentInsetAdjustmentBehavior
 ```
 
 The second one is the search I nearly skipped. Any prop that writes native
@@ -296,6 +348,12 @@ static `contentInset` combined with an automatic
 `contentInsetAdjustmentBehavior` is the same class of risk even though it has
 nothing to do with keyboards. In my own sweep it turned up one grid component
 that the first search had missed.
+
+Then run both again against `node_modules`. The recycle pool is per process, not
+per module, so a scroll view inside a dependency arms the pool exactly as well as
+one of yours does. This is the uncomfortable part of the audit: you can clean
+your own code completely and still be handed a poisoned view by a library you
+did not write.
 
 ### Fix it
 
@@ -325,6 +383,12 @@ layout explicitly.
 The `autoFocus={visible}` change matters more than it looks. Focusing on mount
 is what starts a keyboard animation during modal presentation, which is exactly
 the window the race needs.
+
+Two caveats. `KeyboardAvoidingView` with `behavior="padding"` inside a `Modal`
+behaves differently depending on presentation style, and often wants a
+`keyboardVerticalOffset` before it sits correctly, so treat this as a shape to
+adapt rather than a drop-in. And because of the `node_modules` point above, this
+option cleans your code but cannot promise the pool stays clean.
 
 **Option 2, if you need to keep the flag.** Dismiss the keyboard and let it
 settle before the screen unmounts. That is Control B, and it came back at zero in
