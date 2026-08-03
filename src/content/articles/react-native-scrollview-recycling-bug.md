@@ -9,9 +9,10 @@ ogImage: '/og/react-native-scrollview-recycling-bug.png'
 draft: false
 ---
 
-After logging a meal in my app, every modal still opened correctly. But scrolling
-inside one did not work at all. It ran into blank space, and no amount of
-scrolling brought the content back. The only way out was to restart the app.
+After logging a meal in my app, every modal still opened correctly and the
+content was there. Then the first scroll ran past the end of it into empty space
+below, and no amount of scrolling brought the content back. The only way out was
+to restart the app.
 
 It was not every modal, and not every time. It was any modal opened after the
 meal logging flow, which is the one flow with a text input in it. This surfaced
@@ -234,6 +235,12 @@ handler assigns the geometric overlap between the scroll view and the keyboard
 absolutely on every event rather than adding to what is there. That explains two
 things at once: why the value never accumulates, and why a full-screen scroll
 view in the real app showed a full keyboard height instead of 217.
+
+It also explains the part of the original symptom that a phantom inset alone
+does not. Extra space at the bottom would let you scroll back up to the content.
+In the app you could not: the content stayed out of reach until the process was
+killed. A view being shoved by every keyboard event, rather than one carrying a
+stale number, is what that feels like from the outside.
 
 ## Checking it against the current release
 
