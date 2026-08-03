@@ -174,12 +174,20 @@ pre code {
 	margin-bottom: 0.35em;
 }
 
+.prose li::marker {
+	color: var(--accent);
+}
+
+/* Blockquote doubles as the callout: used to lift a finding out of the flow,
+   so it reads at full strength rather than as a quieter quotation. */
 .prose blockquote {
-	margin: 1.5rem 0;
-	padding: 0.75rem 1.25rem;
-	border-left: 2px solid var(--accent);
+	margin: 1.75rem 0;
+	padding: 1rem 1.25rem;
+	border-left: 3px solid var(--accent);
+	border-radius: 0 4px 4px 0;
 	background: var(--surface);
-	color: var(--muted);
+	color: var(--ink);
+	font-size: 1.0625em;
 }
 
 .prose blockquote p:last-child {

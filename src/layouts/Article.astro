@@ -1,14 +1,17 @@
 ---
+import type { MarkdownHeading } from 'astro';
 import Base from './Base.astro';
+import Contents from '../components/Contents.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { getGroup } from '../data/groups';
 import type { Article } from '../lib/articles';
 
 interface Props {
 	article: Article;
+	headings?: MarkdownHeading[];
 }
 
-const { article } = Astro.props;
+const { article, headings = [] } = Astro.props;
 const { title, description, pubDate, updatedDate, group, type, ogImage } = article.data;
 const parent = getGroup(group);
 ---
@@ -31,6 +34,7 @@ const parent = getGroup(group);
 				)
 			}
 		</p>
+		<Contents headings={headings} />
 		<div class="prose">
 			<slot />
 		</div>

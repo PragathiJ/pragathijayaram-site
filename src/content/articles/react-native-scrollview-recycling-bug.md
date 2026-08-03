@@ -90,13 +90,13 @@ There is a version of this story that is simply a stale value surviving a reset,
 and it is worth ruling out, because it changes what a fix would have to do.
 
 On React Native 0.86.2, `prepareForRecycle` resets both `contentOffset` and
-`contentInset`. The values are cleaned. So the insets I was seeing could not
-have been inherited: they were being written after the reset, by an observer
-that was never disarmed.
+`contentInset`. So the insets I was seeing could not have been inherited: they
+were being written after the reset, by an observer that was never disarmed.
 
-The values are cleaned. The behaviour is not. That distinction is the whole
-finding, and it is what the rest of the work had to establish rather than
-assert.
+> The values are cleaned. The behaviour is not.
+
+That distinction is the whole finding, and it is what the rest of the work had
+to establish rather than assert.
 
 ## Building something that fails on demand
 
@@ -130,10 +130,11 @@ records that jitter as displacement. Several iterations went into separating
 range checks only on settled readings, then a widened tolerance once it became
 clear that bounce jitter was flagging otherwise clean runs.
 
-That is the part worth stating plainly. A detector that reports a bug which is
-not there is worse than no detector, because it makes the real signal
-unfalsifiable. Everything after it, including the controls below, would have
-been noise interpreted as evidence.
+> A detector that reports a bug which is not there is worse than no detector,
+> because it makes the real signal unfalsifiable.
+
+Everything after it, including the controls below, would have been noise
+interpreted as evidence.
 
 ## What the reproducer reports
 
@@ -167,8 +168,8 @@ far as the scroll view is concerned, the space is real.
 
 ## The controls are the argument
 
-A reproducer that fails is a claim. A reproducer that fails, and stops failing
-when you remove exactly one ingredient, is evidence.
+> A reproducer that fails is a claim. A reproducer that fails, and stops failing
+> when you remove exactly one ingredient, is evidence.
 
 Both controls came back at zero, each from a force-quit fresh process. Turning
 the flag off is not enough on its own to cause the failure, and neither is a
@@ -194,8 +195,10 @@ content offset moves in response.
     Your browser does not support embedded video.
   </video>
   <figcaption>
-    The reproducer on a physical device. Nothing in the app touches the victim
-    after it mounts, and it never enabled keyboard inset adjustment.
+    Four poison cycles, then a scroll up into the blank space that should not
+    exist, then three taps on the agitator input, which sits outside the victim
+    and belongs to nothing the victim renders. Nothing in the app touches the
+    victim after it mounts, and it never enabled keyboard inset adjustment.
   </figcaption>
 </figure>
 

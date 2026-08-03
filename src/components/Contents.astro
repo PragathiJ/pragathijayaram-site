@@ -1,0 +1,92 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+	headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+
+// Section level only. Sub-headings would make the box longer than the article
+// summary it is meant to replace.
+const sections = headings.filter((heading) => heading.depth === 2);
+
+// Short articles do not need a map. The threshold sits above the 4-5 sections a
+// ~650-word piece runs to, so the box only appears where scrolling is real work.
+const show = sections.length >= 7;
+---
+
+{
+	show && (
+		<nav class="contents" aria-labelledby="contents-title">
+			<p id="contents-title">Contents</p>
+			<ol>
+				{sections.map((section) => (
+					<li>
+						<a href={`#${section.slug}`}>{section.text}</a>
+					</li>
+				))}
+			</ol>
+		</nav>
+	)
+}
+
+<style>
+	.contents {
+		background: var(--surface);
+		border: 1px solid var(--hairline);
+		border-radius: 4px;
+		padding: 1rem 1.25rem;
+		margin-bottom: 2.5rem;
+	}
+
+	#contents-title {
+		font-family: var(--font-sans);
+		font-size: 0.75rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--muted);
+		margin: 0 0 0.75rem;
+	}
+
+	ol {
+		list-style: none;
+		counter-reset: section;
+		margin: 0;
+		padding: 0;
+		font-family: var(--font-sans);
+		font-size: 0.9375rem;
+	}
+
+	@media (min-width: 34rem) {
+		ol {
+			columns: 2;
+			column-gap: 2rem;
+		}
+	}
+
+	li {
+		counter-increment: section;
+		display: flex;
+		gap: 0.6rem;
+		margin-bottom: 0.4rem;
+		break-inside: avoid;
+	}
+
+	li::before {
+		content: counter(section);
+		color: var(--accent);
+		font-variant-numeric: tabular-nums;
+		flex: none;
+	}
+
+	a {
+		color: var(--ink);
+		text-decoration: none;
+	}
+
+	a:hover {
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+	}
+</style>
