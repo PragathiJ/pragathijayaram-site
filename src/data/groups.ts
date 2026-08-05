@@ -14,17 +14,19 @@ export const GROUPS: Group[] = [
 		id: 'ai-that-has-to-be-right',
 		name: 'AI That Has to Be Right',
 		blurb:
-			'Building LLM and ML features for domains where a confident wrong answer costs more than no answer at all.',
+			'Engineering AI systems for domains where a confident wrong answer can be more costly than no answer at all.',
 	},
 	{
 		id: 'production-engineering',
 		name: 'Production Engineering',
-		blurb: 'Debugging and shipping mobile and backend systems that are already in users’ hands.',
+		blurb:
+			'Technical investigations into the architecture, failures and release work behind mobile and backend systems used in the real world.',
 	},
 	{
 		id: 'building-in-a-regulated-space',
 		name: 'Building in a Regulated Space',
-		blurb: 'Privacy, consumer law and tax treated as engineering constraints, handled by one person.',
+		blurb:
+			'Treating privacy, consumer law and regulatory requirements as product and engineering constraints, not final-stage paperwork.',
 	},
 ];
 

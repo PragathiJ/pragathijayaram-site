@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { BUILDING, PROJECTS } from '../data/portfolio';
+import { BUILDING, EXPERIENCE, PROJECTS } from '../data/portfolio';
 ---
 
 <Base
@@ -35,6 +35,23 @@ import { BUILDING, PROJECTS } from '../data/portfolio';
 			{BUILDING.map((item) => <li>{item}</li>)}
 		</ul>
 	</section>
+
+	<section class="experience">
+		<h2>Experience</h2>
+		{
+			EXPERIENCE.map((role) => (
+				<div class="role">
+					<h3>
+						{role.period} · {role.title}
+					</h3>
+					{role.body.map((paragraph) => (
+						<p>{paragraph}</p>
+					))}
+					<p class="tags">{role.tags}</p>
+				</div>
+			))
+		}
+	</section>
 </Base>
 
 <style>
@@ -50,8 +67,40 @@ import { BUILDING, PROJECTS } from '../data/portfolio';
 		border-bottom: 1px solid var(--hairline);
 	}
 
-	section {
+	section:last-of-type {
 		border-bottom: 0;
+	}
+
+	.experience h2 {
+		margin-bottom: 0.5rem;
+	}
+
+	/* Roles sit a step below the project entries: sans headings, muted body, so
+	   the two receipted projects above stay the loudest thing on the page. */
+	.role {
+		padding-block: 1.25rem;
+		border-bottom: 1px solid var(--hairline);
+	}
+
+	.role:last-child {
+		border-bottom: 0;
+		padding-bottom: 0;
+	}
+
+	.role h3 {
+		font-family: var(--font-sans);
+		font-size: 1rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.role p {
+		color: var(--muted);
+		margin-bottom: 0.6rem;
+	}
+
+	.role .tags {
+		font-size: 0.875rem;
+		margin-bottom: 0;
 	}
 
 	h2 {

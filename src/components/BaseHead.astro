@@ -1,19 +1,64 @@
 ---
 import '../styles/global.css';
-import { SITE_TITLE, DEFAULT_OG_IMAGE } from '../consts';
+import { AUTHOR, SITE_TITLE, SOCIAL, DEFAULT_OG_IMAGE } from '../consts';
 
 interface Props {
 	title: string;
 	description: string;
 	ogImage?: string;
 	pubDate?: Date;
+	updatedDate?: Date;
+	person?: boolean;
 }
 
-const { title, description, ogImage = DEFAULT_OG_IMAGE, pubDate } = Astro.props;
+const {
+	title,
+	description,
+	ogImage = DEFAULT_OG_IMAGE,
+	pubDate,
+	updatedDate,
+	person,
+} = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(ogImage, Astro.site);
 const pageTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
+
+// Every article points its author at this one @id, so the articles, the About
+// page, GitHub and LinkedIn resolve to a single person rather than four names.
+const personURL = new URL('/about/', Astro.site).href;
+const personId = `${personURL}#person`;
+const sameAs = [SOCIAL.linkedin, SOCIAL.github];
+
+const personSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	'@id': personId,
+	name: AUTHOR.name,
+	url: personURL,
+	jobTitle: AUTHOR.jobTitle,
+	description: AUTHOR.description,
+	knowsAbout: AUTHOR.knowsAbout,
+	alumniOf: { '@type': 'CollegeOrUniversity', name: AUTHOR.alumniOf },
+	address: { '@type': 'PostalAddress', addressCountry: 'DE' },
+	sameAs,
+};
+
+const articleSchema = pubDate
+	? {
+			'@context': 'https://schema.org',
+			'@type': 'Article',
+			headline: title,
+			description,
+			image: ogImageURL.href,
+			datePublished: pubDate.toISOString(),
+			dateModified: (updatedDate ?? pubDate).toISOString(),
+			url: canonicalURL.href,
+			mainEntityOfPage: canonicalURL.href,
+			inLanguage: 'en',
+			author: { '@type': 'Person', '@id': personId, name: AUTHOR.name, url: personURL, sameAs },
+		}
+	: null;
 ---
 
 <meta charset="utf-8" />
@@ -50,6 +95,9 @@ const pageTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImageURL} />
+
+{articleSchema && <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />}
+{person && <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />}
 
 <script
 	is:inline

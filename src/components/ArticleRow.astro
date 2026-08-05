@@ -11,17 +11,22 @@ export interface Row {
 }
 
 const { title, href, description, date, type } = Astro.props as Row;
-const status = href ? 'published' : 'planned';
 ---
 
 <article class="row">
 	<h3>{href ? <a href={href}>{title}</a> : <span>{title}</span>}</h3>
-	<p class="meta">
-		{date && <FormattedDate date={date} />}
-		{date && type && <span aria-hidden="true">·</span>}
-		{type && <span>{type}</span>}
-		<Pill status={status} />
-	</p>
+	{
+		/* Planned rows sit under an "Upcoming" label, so a per-row pill would say
+		   the same thing twice. They carry no date or type either, hence no meta line. */
+		(date || type) && (
+			<p class="meta">
+				{date && <FormattedDate date={date} />}
+				{date && type && <span aria-hidden="true">·</span>}
+				{type && <span>{type}</span>}
+				{href && <Pill status="published" />}
+			</p>
+		)
+	}
 	{description && <p class="description">{description}</p>}
 </article>
 

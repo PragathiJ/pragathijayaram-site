@@ -8,14 +8,24 @@ interface Props {
 }
 
 const { group, rows } = Astro.props;
-const publishedCount = rows.filter((row) => row.href).length;
+const published = rows.filter((row) => row.href);
+const upcoming = rows.filter((row) => !row.href);
 ---
 
 <section id={group.id}>
 	<h2>{group.name}</h2>
-	<p class="meta count">{publishedCount} of {rows.length} published</p>
 	<p class="blurb">{group.blurb}</p>
-	{rows.map((row) => <ArticleRow {...row} />)}
+	{published.map((row) => <ArticleRow {...row} />)}
+	{
+		upcoming.length > 0 && (
+			<>
+				<p class="upcoming">Upcoming</p>
+				{upcoming.map((row) => (
+					<ArticleRow {...row} />
+				))}
+			</>
+		)
+	}
 </section>
 
 <style>
@@ -29,12 +39,18 @@ const publishedCount = rows.filter((row) => row.href).length;
 		margin-bottom: 0.5rem;
 	}
 
-	.count {
-		margin-bottom: 0.5rem;
-	}
-
 	.blurb {
 		color: var(--muted);
 		margin-bottom: 1rem;
+	}
+
+	.upcoming {
+		font-family: var(--font-sans);
+		font-size: 0.75rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--muted);
+		margin-top: 1.75rem;
+		margin-bottom: 0.25rem;
 	}
 </style>

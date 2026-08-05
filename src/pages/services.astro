@@ -6,14 +6,23 @@ import { OFFERS } from '../data/services';
 
 <Base
 	title="Work with me"
-	description="Selected work across mobile apps, production AI features, backend engineering, zero to one product development, and technical writing."
+	description="Engineering ownership across architecture, implementation, evaluation and release: mobile products, production AI and LLM systems, backend architecture, and zero-to-one product engineering."
 >
 	<h1>Work with me</h1>
-	<p class="intro">
-		I take on selected projects where I can contribute across engineering, product, and delivery. If
-		one of these matches what you are building, email me with the problem, the current state, and
-		what you need help shipping.
-	</p>
+	<div class="intro">
+		<p>
+			I work with teams that need experienced engineering ownership across architecture,
+			implementation, evaluation and release.
+		</p>
+		<p>
+			I take on selected projects where the technical path is not yet clear, an AI feature needs to
+			move beyond a prototype, or a product needs senior support to reach a dependable release.
+		</p>
+		<p>
+			Tell me what you are building, where it currently stands and what is preventing it from moving
+			forward.
+		</p>
+	</div>
 
 	{
 		OFFERS.map((offer) => (
@@ -24,6 +33,11 @@ import { OFFERS } from '../data/services';
 		))
 	}
 
+	<p class="prompt">
+		Have a technically demanding product, AI system or engineering problem? Email me with a short
+		description of the product, its current state and the outcome you need.
+	</p>
+
 	<p class="cta">
 		<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
 	</p>
@@ -32,6 +46,15 @@ import { OFFERS } from '../data/services';
 <style>
 	.intro {
 		margin-bottom: 2.5rem;
+	}
+
+	.intro p:last-child {
+		margin-bottom: 0;
+	}
+
+	.prompt {
+		margin-top: 2rem;
+		margin-bottom: 0.75rem;
 	}
 
 	section {
@@ -53,6 +76,6 @@ import { OFFERS } from '../data/services';
 	.cta {
 		font-family: var(--font-serif);
 		font-size: var(--step-1);
-		margin-top: 2rem;
+		margin-top: 0;
 	}
 </style>

@@ -5,28 +5,28 @@ export interface Offer {
 
 export const OFFERS: Offer[] = [
 	{
-		title: 'Mobile apps, end to end',
+		title: 'Mobile products, end to end',
 		description:
-			'React Native and Expo development from product architecture and the first screen through testing, release builds, and App Store submission, including the store work and edge cases that projects often underestimate.',
+			'React Native and Expo products from technical architecture and the first screen through testing, release builds and App Store submission. I can own the complete mobile workstream or step into an existing product to resolve architecture, reliability, performance or release problems.',
 	},
 	{
-		title: 'AI features that hold up in production',
+		title: 'Production AI and LLM systems',
 		description:
-			'AI and LLM features designed for real users, with grounding, evaluation, structured outputs, cost and latency controls, prompt versioning, failure handling, and the monitoring needed after release.',
+			'AI and LLM features designed to perform reliably beyond a demo. This includes system architecture, grounding, evaluation, structured outputs, prompt and model versioning, cost and latency controls, failure handling, and the monitoring required after release.',
 	},
 	{
-		title: 'Backend engineering',
+		title: 'Backend systems and architecture',
 		description:
-			'FastAPI and PostgreSQL systems, including API design, data modelling, authentication, background jobs, webhook reliability, idempotency, connection management, and the failure modes that only appear under real load.',
+			'FastAPI and PostgreSQL systems designed around reliability, maintainability and real operating conditions. My work includes API and data architecture, authentication, background processing, webhooks, idempotency, connection management and the failure modes that emerge under production load.',
 	},
 	{
-		title: 'Product development, zero to one',
+		title: 'Zero-to-one product engineering',
 		description:
-			'Turning an early idea into a usable, released product. This can include product scoping, technical architecture, frontend and backend implementation, analytics, subscriptions, privacy requirements, and the platform rules that determine whether a product can launch.',
+			'Turning an early idea into a product that can be used, evaluated and released. I work across product scoping, technical architecture, mobile and backend implementation, analytics, subscriptions, privacy requirements and the platform constraints that determine whether a product can launch.',
 	},
 	{
-		title: 'Technical writing',
+		title: 'Technical investigation and writing',
 		description:
-			'In-depth engineering articles, case studies, and technical documentation grounded in actual implementation work, including the architecture decisions, failed approaches, debugging process, and evidence behind the final result.',
+			'Reproducible technical investigations, engineering case studies and documentation grounded in implementation evidence. I document the architecture decisions, failed approaches, measurements and debugging work behind the final conclusion.',
 	},
 ];

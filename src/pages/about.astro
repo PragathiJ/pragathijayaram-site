@@ -3,49 +3,68 @@ import Base from '../layouts/Base.astro';
 import { CONTACT_EMAIL, SOCIAL } from '../consts';
 
 const FACTS = [
+	['Experience', '10 years across software engineering, applied AI and product development'],
 	['Based in', 'Stuttgart area, Germany'],
-	['Education', 'MSc Communication Engineering, TU Munich'],
-	['Previously', 'Bosch, Mercedes-Benz Tech Motion'],
-	['Now', 'Building Anovi, writing, and taking on selected work'],
-	['Core stack', 'Python, TypeScript, React Native, FastAPI, PostgreSQL'],
+	['Education', 'MSc Communication Engineering, Technical University of Munich'],
+	['Previously', 'Bosch · Mercedes-Benz Tech Motion'],
+	['Now', 'Founder of Anovi · Applied AI systems consultant · Independent product engineer'],
+	['Core stack', 'Python · TypeScript · React Native · FastAPI · PostgreSQL'],
 	[
 		'Focus',
-		'Production AI · Mobile engineering · Full-stack product development · Technical writing',
+		'Production AI · Mobile and backend systems · Zero-to-one products · Technical investigation',
 	],
 ];
 ---
 
 <Base
 	title="About"
-	description="AI/ML engineer in Germany. Machine learning in automotive and industrial systems, then a nutrition app shipped solo."
+	description="Applied AI systems consultant, product engineer and founder. 10 years across embedded engineering, production AI, mobile and backend systems, and shipped products."
+	person
 >
 	<h1>About</h1>
 
 	<div class="prose">
+		<p>Hi, I'm Pragathi.</p>
 		<p>
-			I am an AI/ML engineer. Before this I built machine learning systems in automotive and
-			industrial settings: computer vision, gaze and pose models, explainable AI, transformer and
-			speech systems, and the unglamorous data work underneath all of it. I studied Communication
-			Engineering at TU Munich and wrote my thesis on AI applied to radar.
+			I have spent the past 10 years building software, intelligent systems and digital products,
+			from embedded engineering and applied AI to mobile applications, backend systems and complete
+			product releases.
 		</p>
 		<p>
-			Then I started building Anovi, a nutrition and meal planning app, on my own. Not because of a
-			health scare, but because of a gap I kept running into: nutrition advice is usually accurate
-			and rarely usable. It ignores what is in your kitchen, what is expiring, what you have time to
-			cook, and what you actually like. The interesting problem was never the model. It was
-			translating evidence into a decision someone can make on a Tuesday evening.
+			Before working independently, I held engineering roles at Bosch and Mercedes-Benz. My work
+			covered computer vision, gaze and pose systems, multimodal AI, explainable AI, transformer and
+			speech-based solutions, and the data and evaluation infrastructure underneath them. I studied
+			Communication Engineering at TU Munich and completed my thesis on applying AI to radar.
 		</p>
 		<p>
-			Building it alone meant doing all of it. The schema, the recommendation logic, the LLM
-			pipeline, the payments, the German localisation, the privacy impact assessment, the App Store
-			submission. That range is the reason this site exists. I learned things that are worth writing
-			down, and most of them are not the things people put in conference talks.
+			Today, I divide my time between building Anovi and taking on selected consulting and freelance
+			projects across applied AI, software engineering and product development.
 		</p>
 		<p>
-			What I write here follows one rule: every claim has a receipt. Where there is an upstream
-			issue, the number is in the article. Where there isn't, the article shows the reproduction,
-			the measurement, or the control that made me confident. That includes the work I reverted and
-			the detectors that gave me false positives.
+			I started Anovi because of a gap I kept running into: nutrition advice is often accurate and
+			rarely usable. It does not account for what is already in your kitchen, what is expiring, what
+			you have time to cook or what you actually enjoy eating. The interesting problem was never
+			simply the model. It was translating evidence into a decision someone could make on a Tuesday
+			evening.
+		</p>
+		<p>
+			Building Anovi independently meant taking responsibility for the entire product: the
+			architecture, database schema, recommendation logic, LLM pipeline, mobile experience,
+			payments, localisation, privacy work and App Store release.
+		</p>
+		<p>
+			That range is why this site exists. Building across disciplines taught me things worth
+			documenting, and many of them are not the polished lessons that make it into conference talks.
+		</p>
+		<p>
+			What I write here follows one rule: every claim has a receipt. When there is an upstream issue,
+			I link to it. When there is not, I show the reproduction, measurement or control that supports
+			the conclusion. That includes the approaches I abandoned, the systems that failed and the
+			detectors that produced false positives.
+		</p>
+		<p>
+			I write for people who care not only about whether technology works, but why it works, where
+			it breaks and what it takes to make it dependable.
 		</p>
 	</div>
 
