@@ -10,6 +10,14 @@ const latest = (await getPublishedArticles()).slice(0, 3);
 <Base title={SITE_TITLE} description={SITE_DESCRIPTION}>
 	<h1>Applied AI, mobile and backend systems, grounded in evidence and built to ship.</h1>
 	<div class="intro">
+		<img
+			class="portrait"
+			src="/pragathi.jpg"
+			alt=""
+			width="88"
+			height="88"
+			decoding="async"
+		/>
 		<p>
 			Hey, I'm Pragathi. I'm an applied AI systems consultant, product engineer and founder with 10
 			years of experience building software, intelligent systems and digital products.
@@ -47,6 +55,19 @@ const latest = (await getPublishedArticles()).slice(0, 3);
 	.intro {
 		color: var(--muted);
 		margin-bottom: 3rem;
+	}
+
+	/* Identification, not a hero. Floats so the first paragraph starts level with
+	   it and the rest of the intro runs full width underneath. */
+	.portrait {
+		float: left;
+		width: 88px;
+		height: 88px;
+		border-radius: 50%;
+		object-fit: cover;
+		shape-outside: circle(50%);
+		shape-margin: 0.7rem;
+		margin: 0.2rem 1.15rem 0.5rem 0;
 	}
 
 	.intro p:last-child {
