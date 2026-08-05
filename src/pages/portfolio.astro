@@ -8,23 +8,45 @@ import { BUILDING, EXPERIENCE, PROJECTS } from '../data/portfolio';
 	description="Anovi, a nutrition app shipped solo from schema to App Store, and an upstream React Native issue with a public reproducer."
 >
 	<h1>Portfolio</h1>
-	<p class="intro">Two pieces of work with public receipts, and what I am building next.</p>
+	<p class="intro">
+		Work with public receipts, what I am building now, and the ten years behind both.
+	</p>
 
 	{
 		PROJECTS.map((project) => (
 			<article>
 				<h2>{project.name}</h2>
 				<p class="meta">{project.meta}</p>
-				{project.body.map((paragraph) => (
-					<p>{paragraph}</p>
-				))}
-				<p class="links">
-					{project.links.map((link) => (
-						<a href={link.href} rel="noopener">
-							{link.label}
-						</a>
-					))}
-				</p>
+				<div class="cols">
+					<div class="copy">
+						{project.body.map((paragraph) => (
+							<p>{paragraph}</p>
+						))}
+						<p class="links">
+							{project.links.map((link) => (
+								<a href={link.href} rel="noopener">
+									{link.label}
+								</a>
+							))}
+						</p>
+					</div>
+					{project.shots && (
+						<div class="shots">
+							{project.shots.map((shot) => (
+								<a href={shot.src}>
+									<img
+										src={shot.src}
+										alt={shot.alt}
+										width="400"
+										height="869"
+										loading="lazy"
+										decoding="async"
+									/>
+								</a>
+							))}
+						</div>
+					)}
+				</div>
 			</article>
 		))
 	}
@@ -40,15 +62,22 @@ import { BUILDING, EXPERIENCE, PROJECTS } from '../data/portfolio';
 		<h2>Experience</h2>
 		{
 			EXPERIENCE.map((role) => (
-				<div class="role">
-					<h3>
-						{role.period} · {role.title}
-					</h3>
-					{role.body.map((paragraph) => (
-						<p>{paragraph}</p>
-					))}
-					<p class="tags">{role.tags}</p>
-				</div>
+				<details class="role">
+					<summary>
+						<span class="period">{role.period}</span>
+						<span class="detail">
+							<span class="title">{role.title}</span>
+							<span class="lead">{role.summary}</span>
+						</span>
+						<span class="chevron" aria-hidden="true" />
+					</summary>
+					<div class="more">
+						{role.body.map((paragraph) => (
+							<p>{paragraph}</p>
+						))}
+						<p class="tags">{role.tags}</p>
+					</div>
+				</details>
 			))
 		}
 	</section>
@@ -76,31 +105,105 @@ import { BUILDING, EXPERIENCE, PROJECTS } from '../data/portfolio';
 	}
 
 	/* Roles sit a step below the project entries: sans headings, muted body, so
-	   the two receipted projects above stay the loudest thing on the page. */
+	   the two receipted projects above stay the loudest thing on the page.
+	   Native <details>, so the disclosure costs no JavaScript. Same flex-basis
+	   stacking as the About facts list, so both behave alike at every width. */
 	.role {
-		padding-block: 1.25rem;
 		border-bottom: 1px solid var(--hairline);
 	}
 
 	.role:last-child {
 		border-bottom: 0;
-		padding-bottom: 0;
 	}
 
-	.role h3 {
+	summary {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		gap: 0.25rem 1.5rem;
+		padding-block: 1.25rem;
+		cursor: pointer;
+		list-style: none;
+	}
+
+	/* Safari still paints its own triangle without this. */
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	summary:hover .title,
+	.role[open] .title {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+
+	summary:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+
+	.period {
+		flex: 0 0 6.5rem;
+		font-family: var(--font-sans);
+		font-size: 0.875rem;
+		font-variant-numeric: tabular-nums;
+		color: var(--muted);
+		padding-top: 0.15rem; /* optically aligns with the title's cap height */
+	}
+
+	.detail {
+		flex: 1 1 16rem;
+	}
+
+	.title {
+		display: block;
 		font-family: var(--font-sans);
 		font-size: 1rem;
-		margin-bottom: 0.5rem;
+		font-weight: 600;
+		margin-bottom: 0.2rem;
 	}
 
-	.role p {
+	.lead {
+		display: block;
 		color: var(--muted);
-		margin-bottom: 0.6rem;
 	}
 
-	.role .tags {
-		font-size: 0.875rem;
+	.chevron {
+		flex: 0 0 auto;
+		width: 0.5rem;
+		height: 0.5rem;
+		margin-top: 0.4rem;
+		border-right: 1.5px solid var(--muted);
+		border-bottom: 1.5px solid var(--muted);
+		transform: rotate(45deg);
+		transition: transform 0.15s ease;
+	}
+
+	.role[open] .chevron {
+		transform: rotate(-135deg);
+	}
+
+	/* Indented to the text column so expanded prose lines up with the summary. */
+	.more {
+		padding-left: 8rem;
+		padding-bottom: 1.5rem;
+	}
+
+	.more p {
+		color: var(--muted);
+		margin-bottom: 0.7rem;
+	}
+
+	.tags {
+		font-size: 0.8125rem;
+		margin-top: 1rem;
 		margin-bottom: 0;
+	}
+
+	@media (max-width: 34rem) {
+		.more {
+			padding-left: 0;
+		}
 	}
 
 	h2 {
@@ -110,6 +213,35 @@ import { BUILDING, EXPERIENCE, PROJECTS } from '../data/portfolio';
 
 	.meta {
 		margin-bottom: 0.75rem;
+	}
+
+	/* Screenshot beside the prose. The copy's 22rem basis is what forces the wrap,
+	   so on a narrow screen the shot drops below instead of squeezing the text. */
+	.cols {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		gap: 1.5rem;
+	}
+
+	.copy {
+		flex: 1 1 22rem;
+	}
+
+	.shots {
+		flex: 0 0 200px;
+	}
+
+	.shots img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border: 1px solid var(--hairline);
+		border-radius: 14px;
+	}
+
+	.shots a:hover img {
+		border-color: var(--accent);
 	}
 
 	.links {

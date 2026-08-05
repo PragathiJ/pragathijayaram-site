@@ -24,6 +24,14 @@ const FACTS = [
 	<h1>About</h1>
 
 	<div class="prose">
+		<img
+			class="portrait"
+			src="/pragathi.jpg"
+			alt="Pragathi Jayaram"
+			width="160"
+			height="160"
+			decoding="async"
+		/>
 		<p>Hi, I'm Pragathi.</p>
 		<p>
 			I have spent the past 10 years building software, intelligent systems and digital products,
@@ -87,6 +95,28 @@ const FACTS = [
 </Base>
 
 <style>
+	/* shape-outside lets the lines hug the circle instead of its bounding box,
+	   which otherwise leaves dead corners beside a round portrait. */
+	.portrait {
+		float: left;
+		width: 160px;
+		height: 160px;
+		border-radius: 50%;
+		object-fit: cover;
+		shape-outside: circle(50%);
+		shape-margin: 1rem;
+		margin: 0.35rem 1.5rem 1rem 0;
+	}
+
+	/* A 160px float leaves too little text width on a phone. */
+	@media (max-width: 30rem) {
+		.portrait {
+			float: none;
+			shape-outside: none;
+			margin: 0 0 1.5rem;
+		}
+	}
+
 	.facts {
 		margin: 2.5rem 0;
 		border-top: 1px solid var(--hairline);

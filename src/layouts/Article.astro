@@ -49,6 +49,15 @@ const parent = getGroup(group);
 		</div>
 	</article>
 	<footer class="author">
+		<img
+			class="portrait"
+			src="/pragathi-avatar.jpg"
+			alt=""
+			width="56"
+			height="56"
+			loading="lazy"
+			decoding="async"
+		/>
 		<p class="name">Pragathi Jayaram</p>
 		<p class="bio">
 			Applied AI systems consultant, product engineer and founder. 10 years across production AI,
@@ -89,16 +98,40 @@ const parent = getGroup(group);
 		color: var(--ink);
 	}
 
+	/* Portrait sits in a grid column so the name, bio and links all align to one
+	   edge; on narrow screens it moves above them instead of squeezing the text. */
 	.author {
+		display: grid;
+		grid-template-columns: 56px 1fr;
+		column-gap: 1rem;
 		border-top: 1px solid var(--hairline);
 		padding-top: 1.5rem;
 		margin-top: 3rem;
+	}
+
+	.portrait {
+		grid-row: 1 / span 3;
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		object-fit: cover;
 	}
 
 	.author .name {
 		font-family: var(--font-serif);
 		font-size: var(--step-1);
 		margin-bottom: 0.35rem;
+	}
+
+	@media (max-width: 28rem) {
+		.author {
+			grid-template-columns: 1fr;
+		}
+
+		.portrait {
+			grid-row: auto;
+			margin-bottom: 0.75rem;
+		}
 	}
 
 	.author .bio {
