@@ -1,5 +1,5 @@
 ---
-title: 'My hosting provider was breached while my app was in review: what happened, and what I checked'
+title: 'Breached during App Review: what a solo developer checked when the hosting provider was hit'
 description: 'A security email in the middle of the night, an API key alert the next morning, and two days later the news that my host had been breached. How that week unfolded for me as a solo developer, what was already in place, and what I took away from it.'
 pubDate: 2026-10-26T09:00:00Z
 group: 'production-engineering'
