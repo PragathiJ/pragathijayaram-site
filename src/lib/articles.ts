@@ -16,6 +16,22 @@ export async function getPublishedArticles(): Promise<Article[]> {
 	return articles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
+// Picks the featured ids in order, then fills up to `count` with the newest
+// article from a group not yet shown, so each slot covers a different group.
+export function selectFeatured(articles: Article[], ids: string[], count = 3): Article[] {
+	const byId = new Map(articles.map((article) => [article.id, article]));
+	const picked = ids.map((id) => byId.get(id)).filter((a): a is Article => !!a).slice(0, count);
+	const groups = new Set(picked.map((article) => article.data.group));
+
+	for (const article of articles) {
+		if (picked.length >= count) break;
+		if (picked.includes(article) || groups.has(article.data.group)) continue;
+		picked.push(article);
+		groups.add(article.data.group);
+	}
+	return picked;
+}
+
 export function toRow(article: Article): Row {
 	return {
 		title: article.data.title,

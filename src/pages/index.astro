@@ -2,9 +2,10 @@
 import Base from '../layouts/Base.astro';
 import ArticleRow from '../components/ArticleRow.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import { getPublishedArticles, toRow } from '../lib/articles';
+import { getPublishedArticles, selectFeatured, toRow } from '../lib/articles';
+import { FEATURED } from '../data/featured';
 
-const latest = (await getPublishedArticles()).slice(0, 3);
+const featured = selectFeatured(await getPublishedArticles(), FEATURED);
 ---
 
 <Base title={SITE_TITLE} description={SITE_DESCRIPTION}>
@@ -35,10 +36,10 @@ const latest = (await getPublishedArticles()).slice(0, 3);
 	</div>
 
 	{
-		latest.length > 0 && (
+		featured.length > 0 && (
 			<section>
-				<h2>Latest</h2>
-				{latest.map((article) => (
+				<h2>Start here</h2>
+				{featured.map((article) => (
 					<ArticleRow {...toRow(article)} />
 				))}
 			</section>
