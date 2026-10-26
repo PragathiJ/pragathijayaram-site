@@ -6,6 +6,7 @@ group: 'production-engineering'
 type: 'guide'
 tags: ['security', 'incident-response', 'secrets', 'gdpr', 'solo-founder']
 draft: false
+ogImage: '/og/hosting-provider-breach-incident-checklist.png'
 ---
 
 When my hosting provider told me that my workspace matched what an attacker had

@@ -6,6 +6,7 @@ group: 'production-engineering'
 type: 'investigation'
 tags: ['security', 'incident-response', 'secrets', 'backend', 'solo-founder']
 draft: false
+ogImage: '/og/host-breached-while-app-in-review.png'
 ---
 
 I want to share what happened during one week in October, because I think it
