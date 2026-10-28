@@ -1,42 +1,60 @@
 ---
 import Base from '../layouts/Base.astro';
 import { CONTACT_EMAIL } from '../consts';
-import { OFFERS } from '../data/services';
+import { OFFERS, SHAPES } from '../data/services';
 ---
 
 <Base
 	title="Work with me"
-	description="Engineering ownership across architecture, implementation, evaluation and release: mobile products, production AI and LLM systems, backend architecture, and zero-to-one product engineering."
+	description="Mobile products from concept to live on the App Store and Google Play. Concept-to-launch builds, finish-and-launch takeovers and launch readiness reviews, plus production AI and backend systems."
 >
 	<h1>Work with me</h1>
 	<div class="intro">
 		<p>
-			I work with teams that need experienced engineering ownership across architecture,
-			implementation, evaluation and release.
+			I take mobile products from concept to a live listing on the App Store and Google Play, and I
+			take over products that are stuck on the way there.
 		</p>
 		<p>
-			I take on selected projects where the technical path is not yet clear, an AI feature needs to
-			move beyond a prototype, or a product needs senior support to reach a dependable release.
+			In 2026 I built and launched Anovi on my own: the PostgreSQL schema and FastAPI backend, the
+			React Native app, an LLM pipeline, subscriptions on both stores, German and English, the GDPR
+			work a health-adjacent app needs in the EU, and both store submissions. Apple approved it on
+			the first submission. Before that I spent eight years at Bosch and Mercedes-Benz building
+			embedded and applied AI systems with other people's deadlines attached.
 		</p>
-		<p>
-			Tell me what you are building, where it currently stands and what is preventing it from moving
-			forward.
-		</p>
+		<p>Most of what I am asked for falls into one of three shapes.</p>
 	</div>
 
 	{
-		OFFERS.map((offer) => (
+		SHAPES.map((shape) => (
 			<section>
-				<h2>{offer.title}</h2>
-				<p>{offer.description}</p>
+				<h2>{shape.title}</h2>
+				<p>{shape.description}</p>
 			</section>
 		))
 	}
 
-	<p class="prompt">
-		Have a technically demanding product, AI system or engineering problem? Email me with a short
-		description of the product, its current state and the outcome you need.
-	</p>
+	<section class="also">
+		<h2>Also</h2>
+		<ul>
+			{
+				OFFERS.map((offer) => (
+					<li>
+						<strong>{offer.title}.</strong> {offer.description}
+					</li>
+				))
+			}
+		</ul>
+	</section>
+
+	<section>
+		<h2>How an engagement starts</h2>
+		<p>
+			Email me a short description of the product, where it stands and the outcome you need. I
+			reply within two working days with questions or a scoped proposal. Reviews and launches are
+			fixed scope; builds are milestone or hourly. I work remote from Germany, in English, under a
+			written agreement with IP assigned to you.
+		</p>
+	</section>
 
 	<p class="cta">
 		<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
@@ -50,11 +68,6 @@ import { OFFERS } from '../data/services';
 
 	.intro p:last-child {
 		margin-bottom: 0;
-	}
-
-	.prompt {
-		margin-top: 2rem;
-		margin-bottom: 0.75rem;
 	}
 
 	section {
@@ -71,6 +84,21 @@ import { OFFERS } from '../data/services';
 	section p {
 		margin: 0;
 		color: var(--muted);
+	}
+
+	.also ul {
+		margin: 0;
+		padding-left: 1.1rem;
+		color: var(--muted);
+	}
+
+	.also li + li {
+		margin-top: 0.5rem;
+	}
+
+	.also strong {
+		color: var(--ink);
+		font-weight: 600;
 	}
 
 	.cta {

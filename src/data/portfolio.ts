@@ -19,10 +19,11 @@ export interface Project {
 export const PROJECTS: Project[] = [
 	{
 		name: 'Anovi, a nutrition and meal planning app',
-		meta: 'Founder & Product Engineer · End-to-end architecture, mobile, backend and release · Germany',
+		meta: 'Founder & Product Engineer · Concept to live on the App Store and Google Play · Germany',
 		body: [
+			'Live on the App Store since August 2026 and on Google Play since October 2026, approved by Apple on the first submission. Subscriptions run through RevenueCat on both stores, authentication through Supabase, the backend on FastAPI and PostgreSQL.',
 			'Anovi plans meals around what someone already has, what they like, and what their nutrition targets still need. It connects pantry stock, grocery lists, recipes and nutrient gaps into a single flow, with an LLM pipeline that turns free-text meal logs into structured ingredients, and a generator that ranks recipes against several competing objectives at once.',
-			'The work covered the PostgreSQL schema and FastAPI backend, the React Native app, the subscription and paywall layer, German and English localisation, and the privacy, consumer law and App Store requirements that decide whether a product in this space can launch at all.',
+			'The work covered the PostgreSQL schema and FastAPI backend, the React Native app, the subscription and paywall layer, German and English localisation, release builds for both platforms, and the privacy, consumer law and store requirements that decide whether a product in this space can launch at all.',
 		],
 		shots: [
 			{
@@ -30,7 +31,19 @@ export const PROJECTS: Project[] = [
 				alt: 'Recipes ranked by pantry match, with soon-to-expire ingredients flagged',
 			},
 		],
-		links: [{ href: 'https://www.anoviwellness.com', label: 'Visit the site' }],
+		links: [
+			{ href: 'https://apps.apple.com/de/app/id6761064126', label: 'App Store' },
+			{
+				href: 'https://play.google.com/store/apps/details?id=com.anoviwellness.anovi',
+				label: 'Google Play',
+			},
+			{ href: 'https://www.anoviwellness.com', label: 'Visit the site' },
+			{ href: '/articles/approved-on-the-first-submission/', label: 'How it passed review' },
+			{
+				href: '/articles/app-store-submission-checklist-health-app/',
+				label: 'What Apple checked',
+			},
+		],
 	},
 	{
 		name: 'Tracing a React Native iOS recycling bug',
@@ -79,9 +92,10 @@ export const EXPERIENCE: Role[] = [
 		period: '2025–now',
 		title: 'Founder & Product Engineer, Anovi',
 		summary:
-			'Building a connected nutrition product independently across product, mobile, backend, AI and release.',
+			'Built and launched a connected nutrition product solo. Live on the App Store and Google Play since 2026.',
 		body: [
-			'Building a connected nutrition and meal-planning product independently from product architecture to release. My work spans data and backend architecture, recommendation and LLM systems, the React Native application, subscriptions, localisation, privacy and App Store delivery.',
+			'Built and launched a connected nutrition and meal-planning product independently, from product architecture to release on both stores. My work spans data and backend architecture, recommendation and LLM systems, the React Native application, subscriptions, localisation, privacy and store delivery.',
+			'Live on the App Store since August 2026 and Google Play since October 2026, approved by Apple on the first submission. Updates ship every few weeks.',
 		],
 		tags: 'Product strategy · Applied AI · React Native · FastAPI · PostgreSQL',
 	},
@@ -123,6 +137,7 @@ export const EXPERIENCE: Role[] = [
 ];
 
 export const BUILDING: string[] = [
+	'Anovi 1.0.2. Subscription offer codes on both stores and a reworked acquisition step, in store review.',
 	'Evidence-Grounded Nutrition Research Copilot. Retrieval and citation design for nutrition evidence, built to refuse questions the sources cannot answer.',
 	'Cycle-aware nutrition flow. Symptom and phase aware planning, scoped to stay non-medical.',
 ];

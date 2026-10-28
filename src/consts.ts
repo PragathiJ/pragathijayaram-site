@@ -21,6 +21,9 @@ export const AUTHOR = {
 		'FastAPI',
 		'PostgreSQL',
 		'Product engineering',
+		'App Store and Google Play release',
+		'In-app subscriptions',
+		'GDPR for mobile apps',
 	],
 	alumniOf: 'Technical University of Munich',
 } as const;
