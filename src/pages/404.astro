@@ -1,9 +1,37 @@
 ---
 import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
 ---
 
 <Base title="Page not found" description="That page does not exist.">
-	<h1>Page not found</h1>
-	<p>That page does not exist, or it has moved.</p>
-	<p><a href="/articles">All articles</a></p>
+	<div class="card lost">
+		<p class="eyebrow">404</p>
+		<h1>That page does not exist, or it has moved.</h1>
+		<p class="muted">The articles and the services page are the two places most links point to.</p>
+		<div class="actions">
+			<Button href="/articles" primary icon="arrow">All articles</Button>
+			<Button href="/services">Work with me</Button>
+		</div>
+	</div>
 </Base>
+
+<style>
+	.lost {
+		padding: 2.5rem 2rem;
+	}
+
+	h1 {
+		margin: 0.35rem 0 0.75rem;
+	}
+
+	.muted {
+		color: var(--muted);
+		margin-bottom: 1.5rem;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+</style>

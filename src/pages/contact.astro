@@ -1,58 +1,137 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon, { type IconName } from '../components/Icon.astro';
 import { CONTACT_EMAIL, SOCIAL } from '../consts';
+
+const CHANNELS: { icon: IconName; label: string; value: string; href: string; note: string }[] = [
+	{
+		icon: 'mail',
+		label: 'Email',
+		value: CONTACT_EMAIL,
+		href: `mailto:${CONTACT_EMAIL}`,
+		note: 'Best for anything about work. I reply within two working days.',
+	},
+	{
+		icon: 'chat',
+		label: 'LinkedIn',
+		value: 'pragathi-jayaram',
+		href: SOCIAL.linkedin,
+		note: 'Where I post about building Anovi and what I learn along the way.',
+	},
+	...(SOCIAL.upwork
+		? [
+				{
+					icon: 'card' as IconName,
+					label: 'Upwork',
+					value: 'Profile and fixed-scope packages',
+					href: SOCIAL.upwork,
+					note: 'If you prefer escrow and milestones.',
+				},
+			]
+		: []),
+	{
+		icon: 'layers',
+		label: 'GitHub',
+		value: 'PragathiJ',
+		href: SOCIAL.github,
+		note: 'Reproducers from the investigations.',
+	},
+];
 ---
 
-<Base title="Contact" description="How to reach Pragathi Jayaram.">
-	<h1>Contact</h1>
-	<p class="intro">
-		Email is best. I read everything and answer anything specific. If you are writing about work,
-		a short description of the problem is more useful than a brief.
-	</p>
+<Base title="Contact" description="How to reach Pragathi Jayaram." wide>
+	<div class="head">
+		<p class="eyebrow">Contact</p>
+		<h1>Email is best.</h1>
+		<p class="intro">
+			I read everything and answer anything specific. If you are writing about work, a short
+			description of the problem is more useful than a brief.
+		</p>
+	</div>
 
-	<dl>
-		<div>
-			<dt>Email</dt>
-			<dd><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></dd>
-		</div>
-		<div>
-			<dt>GitHub</dt>
-			<dd><a href={SOCIAL.github} rel="me noopener">PragathiJ</a></dd>
-		</div>
-		<div>
-			<dt>LinkedIn</dt>
-			<dd><a href={SOCIAL.linkedin} rel="me noopener">pragathi-jayaram</a></dd>
-		</div>
-	</dl>
+	<div class="grid">
+		{
+			CHANNELS.map((channel) => (
+				<a class="card channel" href={channel.href} rel={channel.href.startsWith('http') ? 'me noopener' : undefined}>
+					<span class="icon-badge">
+						<Icon name={channel.icon} size={22} />
+					</span>
+					<span class="label">{channel.label}</span>
+					<span class="value">{channel.value}</span>
+					<span class="note">{channel.note}</span>
+				</a>
+			))
+		}
+	</div>
 </Base>
 
 <style>
+	.head {
+		margin-bottom: 2.5rem;
+		max-width: 46rem;
+	}
+
+	h1 {
+		font-size: clamp(2rem, 4vw, 2.75rem);
+		margin: 0.35rem 0 0.75rem;
+	}
+
 	.intro {
 		color: var(--muted);
-		margin-bottom: 2rem;
-	}
-
-	dl {
+		font-size: var(--step-1);
 		margin: 0;
-		border-top: 1px solid var(--hairline);
 	}
 
-	dl div {
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+		gap: 1.25rem;
+	}
+
+	.channel {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 0.25rem 1rem;
-		padding-block: 0.75rem;
-		border-bottom: 1px solid var(--hairline);
+		flex-direction: column;
+		gap: 0.35rem;
+		color: var(--ink);
+		text-decoration: none;
+		transition: border-color 120ms ease;
 	}
 
-	dt {
-		flex: 0 0 6rem;
+	.channel:hover {
+		border-color: var(--accent);
+		text-decoration: none;
+	}
+
+	.icon-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 10px;
+		background: var(--tint);
+		color: var(--accent);
+		margin-bottom: 0.5rem;
+	}
+
+	.label {
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--muted);
+	}
+
+	.value {
+		font-family: var(--font-serif);
+		font-size: var(--step-1);
+		font-weight: 600;
+		color: var(--accent);
+		word-break: break-word;
+	}
+
+	.note {
 		color: var(--muted);
 		font-size: 0.9375rem;
-	}
-
-	dd {
-		margin: 0;
-		flex: 1 1 16rem;
 	}
 </style>

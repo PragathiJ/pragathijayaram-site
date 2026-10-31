@@ -1,93 +1,395 @@
 ---
 import Base from '../layouts/Base.astro';
 import ArticleRow from '../components/ArticleRow.astro';
+import Button from '../components/Button.astro';
+import Icon, { type IconName } from '../components/Icon.astro';
+import ProofStrip from '../components/ProofStrip.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import { getPublishedArticles, selectFeatured, toRow } from '../lib/articles';
 import { FEATURED } from '../data/featured';
+import { PROJECTS } from '../data/portfolio';
 
 const featured = selectFeatured(await getPublishedArticles(), FEATURED);
+const [anovi] = PROJECTS;
+
+const LANES: { icon: IconName; title: string; text: string }[] = [
+	{
+		icon: 'phone-check',
+		title: 'Mobile products',
+		text: 'React Native apps from concept to live on both stores, and the review, subscription and release work that decides whether they get there.',
+	},
+	{
+		icon: 'nodes',
+		title: 'Applied AI systems',
+		text: 'LLM features and agents that have to be right: grounded, evaluated, with a fallback and a cost you can see.',
+	},
+	{
+		icon: 'layers',
+		title: 'Backend systems',
+		text: 'FastAPI and PostgreSQL built for real operating conditions: auth, webhooks, idempotency and the failure modes under load.',
+	},
+];
 ---
 
-<Base title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<h1>Applied AI, mobile and backend systems, grounded in evidence and built to ship.</h1>
-	<div class="intro">
-		<img
-			class="portrait"
-			src="/pragathi.jpg"
-			alt=""
-			width="88"
-			height="88"
-			decoding="async"
-		/>
-		<p>
-			Hey, I'm Pragathi. I'm an applied AI systems consultant, product engineer and founder with 10
-			years of experience building software, intelligent systems and digital products.
-		</p>
-		<p>
-			My work spans embedded engineering, production AI, mobile and backend systems, and
-			zero-to-one product development. After working at Bosch and Mercedes-Benz, I built and
-			launched Anovi independently, taking it from product architecture and recommendation logic
-			through backend development, mobile release and both app stores.
-		</p>
-		<p>
-			This site is where I document the decisions behind reliable products: what worked, what
-			failed, what the evidence showed and what it took to ship.
-		</p>
-	</div>
+<Base title={SITE_TITLE} description={SITE_DESCRIPTION} wide>
+	<section class="hero">
+		<div class="hero-copy">
+			<p class="eyebrow">Hey, I'm Pragathi</p>
+			<h1>Applied AI, mobile and backend systems, grounded in evidence and built to ship.</h1>
+			<p class="sub">
+				I'm an applied AI systems consultant, product engineer and founder with ten years of
+				building software, intelligent systems and digital products. After Bosch and Mercedes-Benz,
+				I took Anovi from a concept to a live listing on the App Store and Google Play: approved by
+				Apple on the first submission, subscriptions on both stores, the EU privacy work a health
+				app needs, and a hosting-provider breach handled while the app sat in review. This site is
+				where I write down what worked, what failed, and what it took to ship.
+			</p>
+			<div class="actions">
+				<Button href="/services" primary icon="arrow">Work with me</Button>
+				<Button href="/articles">Read the articles</Button>
+			</div>
+		</div>
+		<div class="hero-visual">
+			<span class="halo"></span>
+			<img
+				class="portrait"
+				src="/pragathi.jpg"
+				alt="Pragathi Jayaram"
+				width="200"
+				height="200"
+				decoding="async"
+			/>
+		</div>
+	</section>
+
+	<ProofStrip />
+
+	<section class="lanes">
+		<h2>What I work on</h2>
+		<div class="grid-3">
+			{
+				LANES.map((lane) => (
+					<article class="card lane">
+						<span class="icon-badge">
+							<Icon name={lane.icon} size={22} />
+						</span>
+						<h3>{lane.title}</h3>
+						<p>{lane.text}</p>
+					</article>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="work">
+		<div class="section-head">
+			<h2>Work with receipts</h2>
+			<a href="/portfolio">Full portfolio</a>
+		</div>
+		<article class="card project featured">
+			<div class="project-copy">
+				<p class="eyebrow">Founder and product engineer</p>
+				<h3>{anovi.name}</h3>
+				<p>{anovi.body[0]}</p>
+				<p>{anovi.body[1]}</p>
+				<p class="links">
+					{
+						anovi.links.slice(0, 2).map((link) => (
+							<a href={link.href} rel="noopener">
+								{link.label}
+							</a>
+						))
+					}
+					<a href={anovi.links[3].href}>{anovi.links[3].label}</a>
+				</p>
+			</div>
+			{
+				anovi.shots && (
+					<div class="shots">
+						{anovi.shots.map((shot, i) => (
+							<img
+								class="shot"
+								src={shot.src}
+								alt={shot.alt}
+								width="400"
+								height="869"
+								loading="lazy"
+								decoding="async"
+								style={`--i: ${i}`}
+							/>
+						))}
+					</div>
+				)
+			}
+		</article>
+	</section>
 
 	{
 		featured.length > 0 && (
-			<section>
-				<h2>Start here</h2>
-				{featured.map((article) => (
-					<ArticleRow {...toRow(article)} />
-				))}
+			<section class="articles">
+				<div class="section-head">
+					<h2>Insights for builders</h2>
+					<a href="/articles">All articles</a>
+				</div>
+				<div class="rows">
+					{featured.map((article) => (
+						<ArticleRow {...toRow(article)} />
+					))}
+				</div>
 			</section>
 		)
 	}
 
-	<p class="links">
-		<a href="/articles">All articles</a>
-		<a href="/services">Work with me: concept to live on both stores</a>
-	</p>
+	<section class="closing card">
+		<div>
+			<h2>Have an app that needs to get to the stores?</h2>
+			<p class="muted">
+				Fixed-scope reviews, fixes and builds. Tell me where it stands and I reply within two working
+				days.
+			</p>
+		</div>
+		<Button href="/services" primary icon="arrow">See how I can help</Button>
+	</section>
 </Base>
 
 <style>
-	.intro {
-		color: var(--muted);
-		margin-bottom: 3rem;
-	}
-
-	/* Identification, not a hero. Floats so the first paragraph starts level with
-	   it and the rest of the intro runs full width underneath. */
-	.portrait {
-		float: left;
-		width: 88px;
-		height: 88px;
-		border-radius: 50%;
-		object-fit: cover;
-		shape-outside: circle(50%);
-		shape-margin: 0.7rem;
-		margin: 0.2rem 1.15rem 0.5rem 0;
-	}
-
-	.intro p:last-child {
-		margin-bottom: 0;
-	}
-
 	section {
-		margin-bottom: 2.5rem;
+		margin-bottom: 4rem;
 	}
 
 	h2 {
-		font-size: var(--step-1);
-		border-bottom: 2px solid var(--ink);
-		padding-bottom: 0.35rem;
+		font-size: var(--step-2);
+		margin-bottom: 1rem;
 	}
 
-	.links {
+	h3 {
+		font-size: var(--step-1);
+		margin-bottom: 0.35rem;
+	}
+
+	.muted {
+		color: var(--muted);
+	}
+
+	.actions {
 		display: flex;
-		gap: 1.5rem;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.grid-2,
+	.grid-3 {
+		display: grid;
+		gap: 1.25rem;
+	}
+
+	.grid-2 {
+		grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+	}
+
+	.grid-3 {
+		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+	}
+
+	.icon-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 10px;
+		background: var(--tint);
+		color: var(--accent);
+	}
+
+	.section-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.section-head h2 {
+		margin: 0;
+	}
+
+	.section-head a {
 		font-size: 0.9375rem;
+	}
+
+	/* Hero */
+	.hero {
+		display: grid;
+		grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+		gap: 2.5rem;
+		align-items: center;
+		margin-bottom: 2.5rem;
+	}
+
+	.hero h1 {
+		font-size: clamp(2rem, 4.5vw, 3rem);
+		margin: 0.35rem 0 0.75rem;
+	}
+
+	.hero .sub {
+		color: var(--muted);
+		font-size: var(--step-0);
+		max-width: 36rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.hero-visual {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 260px;
+	}
+
+	.halo {
+		position: absolute;
+		width: 260px;
+		height: 260px;
+		border-radius: 50%;
+		background: var(--tint);
+	}
+
+	.portrait {
+		position: relative;
+		width: 200px;
+		height: 200px;
+		border-radius: 50%;
+		object-fit: cover;
+		border: 4px solid var(--bg);
+		box-shadow: 0 10px 30px rgb(0 0 0 / 0.12);
+	}
+
+	@media (max-width: 48rem) {
+		.hero {
+			grid-template-columns: 1fr;
+		}
+
+		.hero-visual {
+			min-height: 200px;
+		}
+
+		.halo {
+			width: 200px;
+			height: 200px;
+		}
+
+		.portrait {
+			width: 150px;
+			height: 150px;
+		}
+	}
+
+	/* Lanes */
+	.lane {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+	}
+
+	.lane h3 {
+		margin: 0.25rem 0 0;
+	}
+
+	.lane p {
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.9375rem;
+	}
+
+	/* Work */
+	.project {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.project h3 {
+		margin: 0.2rem 0 0.35rem;
+	}
+
+	.project p {
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.9375rem;
+	}
+
+	.project .links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.25rem;
+		margin-top: auto;
+		padding-top: 0.75rem;
+		font-weight: 600;
+	}
+
+	.featured {
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 2rem;
+		padding: 2rem;
+	}
+
+	.featured .project-copy {
+		flex: 1 1 20rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	/* Three phones, fanned: each one sits a little lower and overlaps the last. */
+	.shots {
+		flex: 1 1 20rem;
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		padding-top: 0.5rem;
+	}
+
+	.shot {
+		width: 38%;
+		max-width: 170px;
+		height: auto;
+		border: 1px solid var(--hairline);
+		border-radius: 18px;
+		box-shadow: 0 12px 30px rgb(0 0 0 / 0.18);
+		margin-left: -8%;
+		transform: translateY(calc(var(--i) * 1.25rem));
+		background: var(--surface);
+	}
+
+	.shot:first-child {
+		margin-left: 0;
+	}
+
+	/* Articles */
+	.rows {
+		border-top: 1px solid var(--hairline);
+	}
+
+	/* Closing */
+	.closing {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		padding: 2rem;
+		background: var(--tint);
+		border-color: transparent;
+		margin-bottom: 0;
+	}
+
+	.closing h2 {
+		margin-bottom: 0.35rem;
+	}
+
+	.closing p {
+		margin: 0;
 	}
 </style>

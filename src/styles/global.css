@@ -5,6 +5,10 @@
 	--muted: #5a675f;
 	--accent: #12694f;
 	--hairline: #e3e7e3;
+	--tint: #e7f1ec;
+	--on-accent: #fbfbfa;
+	--radius: 12px;
+	--measure-wide: 66rem;
 
 	--font-serif: Charter, 'Iowan Old Style', Georgia, 'Times New Roman', serif;
 	--font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -26,6 +30,8 @@
 		--muted: #93a399;
 		--accent: #58c398;
 		--hairline: #242c27;
+		--tint: #17281f;
+		--on-accent: #0f1411;
 	}
 }
 
@@ -139,10 +145,76 @@ pre code {
 	padding-inline: 1.25rem;
 }
 
+.wrap.wide {
+	max-width: var(--measure-wide);
+}
+
 .meta {
 	font-size: 0.875rem;
 	color: var(--muted);
 	font-variant-numeric: tabular-nums;
+}
+
+/* Small uppercase label above a heading or on a card. */
+.eyebrow {
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+
+/* Buttons: filled pine for the one primary action, outlined for the rest. */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.65rem 1.1rem;
+	border-radius: 999px;
+	border: 1.5px solid var(--accent);
+	font-family: var(--font-sans);
+	font-size: 0.9375rem;
+	font-weight: 600;
+	line-height: 1.2;
+	text-decoration: none;
+	color: var(--accent);
+	background: transparent;
+	transition:
+		background-color 120ms ease,
+		color 120ms ease,
+		transform 120ms ease;
+}
+
+.btn:hover {
+	background: var(--tint);
+	text-decoration: none;
+}
+
+.btn.primary {
+	background: var(--accent);
+	color: var(--on-accent);
+}
+
+.btn.primary:hover {
+	filter: brightness(1.08);
+}
+
+.btn svg {
+	width: 1.1em;
+	height: 1.1em;
+}
+
+.btn.small {
+	padding: 0.4rem 0.85rem;
+	font-size: 0.875rem;
+}
+
+/* Card: the one container shape used on the wide pages. */
+.card {
+	background: var(--surface);
+	border: 1px solid var(--hairline);
+	border-radius: var(--radius);
+	padding: 1.5rem;
 }
 
 .sr-only {

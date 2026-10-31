@@ -1,53 +1,131 @@
 ---
-import { FOOTER_LINKS, SITE_TITLE, SOCIAL } from '../consts';
+import { CONTACT_EMAIL, FOOTER_LINKS, SITE_TITLE, SOCIAL } from '../consts';
 
 const year = new Date().getFullYear();
 ---
 
 <footer>
-	<div class="wrap inner">
-		<p class="meta">&copy; {year} {SITE_TITLE}</p>
+	<div class="wrap wide inner">
+		<div class="brand">
+			<p class="name">{SITE_TITLE}</p>
+			<p class="tagline">
+				Applied AI, mobile and backend systems, grounded in evidence and built to ship.
+			</p>
+			<p class="email"><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+		</div>
 		<nav aria-label="Footer">
-			{FOOTER_LINKS.map((link) => <a href={link.href}>{link.label}</a>)}
-			<a href={SOCIAL.github} rel="me noopener">GitHub</a>
-			<a href={SOCIAL.linkedin} rel="me noopener">LinkedIn</a>
+			<div class="col">
+				<p class="col-title">Site</p>
+				<a href="/articles">Articles</a>
+				<a href="/portfolio">Portfolio</a>
+				<a href="/services">Work with me</a>
+				<a href="/about">About</a>
+			</div>
+			<div class="col">
+				<p class="col-title">Elsewhere</p>
+				<a href={SOCIAL.github} rel="me noopener">GitHub</a>
+				<a href={SOCIAL.linkedin} rel="me noopener">LinkedIn</a>
+				{
+					SOCIAL.upwork && (
+						<a href={SOCIAL.upwork} rel="me noopener">
+							Upwork
+						</a>
+					)
+				}
+				<a href="/rss.xml">RSS</a>
+			</div>
+			<div class="col">
+				<p class="col-title">Legal</p>
+				{FOOTER_LINKS.filter((l) => l.href !== '/rss.xml').map((link) => <a href={link.href}>{link.label}</a>)}
+			</div>
 		</nav>
+	</div>
+	<div class="wrap wide bottom">
+		<p class="meta">&copy; {year} {SITE_TITLE}. Written by a person, with receipts.</p>
 	</div>
 </footer>
 
 <style>
 	footer {
 		border-top: 1px solid var(--hairline);
+		background: var(--surface);
+		margin-top: 4rem;
 	}
 
 	.inner {
 		display: flex;
 		flex-wrap: wrap;
-		align-items: baseline;
 		justify-content: space-between;
-		gap: 0.75rem 1.5rem;
-		padding-block: 1.5rem 2.5rem;
+		gap: 2rem 3rem;
+		padding-block: 2.5rem 1.5rem;
 	}
 
-	p {
+	.brand {
+		flex: 1 1 18rem;
+		max-width: 24rem;
+	}
+
+	.brand p {
 		margin: 0;
+	}
+
+	.name {
+		font-family: var(--font-serif);
+		font-size: var(--step-1);
+		font-weight: 600;
+		margin-bottom: 0.35rem;
+	}
+
+	.tagline {
+		color: var(--muted);
+		font-size: 0.9375rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.email {
+		font-size: 0.9375rem;
 	}
 
 	nav {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 1.25rem;
-		font-size: 0.875rem;
+		gap: 2rem 3rem;
+	}
+
+	.col {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		min-width: 7rem;
+	}
+
+	.col-title {
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--muted);
+		margin: 0 0 0.25rem;
 	}
 
 	nav a {
-		color: var(--muted);
+		color: var(--ink);
+		font-size: 0.9375rem;
 		text-decoration: none;
 	}
 
 	nav a:hover {
-		color: var(--ink);
+		color: var(--accent);
 		text-decoration: underline;
 		text-underline-offset: 0.2em;
+	}
+
+	.bottom {
+		padding-block: 1rem 1.5rem;
+		border-top: 1px solid var(--hairline);
+	}
+
+	.bottom p {
+		margin: 0;
 	}
 </style>

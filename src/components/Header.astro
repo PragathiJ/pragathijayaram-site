@@ -1,13 +1,24 @@
 ---
 import { NAV, SITE_TITLE } from '../consts';
 import NavLink from './NavLink.astro';
+
+// "Work with me" is the one action in the nav, so it renders as a button.
+const links = NAV.filter((item) => item.href !== '/services');
+const action = NAV.find((item) => item.href === '/services');
 ---
 
 <header>
-	<div class="wrap bar">
+	<div class="wrap wide bar">
 		<a href="/" class="name">{SITE_TITLE}</a>
 		<nav aria-label="Main">
-			{NAV.map((item) => <NavLink href={item.href}>{item.label}</NavLink>)}
+			{links.map((item) => <NavLink href={item.href}>{item.label}</NavLink>)}
+			{
+				action && (
+					<a href={action.href} class="btn primary small">
+						{action.label}
+					</a>
+				)
+			}
 		</nav>
 	</div>
 </header>
@@ -20,15 +31,16 @@ import NavLink from './NavLink.astro';
 	.bar {
 		display: flex;
 		flex-wrap: wrap;
-		align-items: baseline;
+		align-items: center;
 		justify-content: space-between;
 		gap: 0.75rem 1.5rem;
-		padding-block: 1.25rem;
+		padding-block: 1rem;
 	}
 
 	.name {
 		font-family: var(--font-serif);
 		font-size: var(--step-1);
+		font-weight: 600;
 		color: var(--ink);
 		text-decoration: none;
 	}
@@ -36,6 +48,7 @@ import NavLink from './NavLink.astro';
 	nav {
 		display: flex;
 		flex-wrap: wrap;
+		align-items: center;
 		gap: 1.25rem;
 		font-size: 0.9375rem;
 	}

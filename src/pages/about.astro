@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
 import { CONTACT_EMAIL, SOCIAL } from '../consts';
 
 const FACTS = [
@@ -20,131 +21,215 @@ const FACTS = [
 	title="About"
 	description="Applied AI systems consultant, product engineer and founder. 10 years across embedded engineering, production AI, mobile and backend systems, and shipped products."
 	person
+	wide
 >
-	<h1>About</h1>
+	<section class="hero">
+		<div class="hero-copy">
+			<p class="eyebrow">About</p>
+			<h1>Hi, I'm Pragathi.</h1>
+			<p class="sub">
+				I have spent the past 10 years building software, intelligent systems and digital products,
+				from embedded engineering and applied AI to mobile applications, backend systems and complete
+				product releases.
+			</p>
+			<div class="actions">
+				<Button href={`mailto:${CONTACT_EMAIL}`} primary icon="mail">Email</Button>
+				<Button href={SOCIAL.linkedin}>LinkedIn</Button>
+			</div>
+		</div>
+		<div class="hero-visual">
+			<span class="halo"></span>
+			<img
+				class="portrait"
+				src="/pragathi.jpg"
+				alt="Pragathi Jayaram"
+				width="200"
+				height="200"
+				decoding="async"
+			/>
+		</div>
+	</section>
 
-	<div class="prose">
-		<img
-			class="portrait"
-			src="/pragathi.jpg"
-			alt="Pragathi Jayaram"
-			width="160"
-			height="160"
-			decoding="async"
-		/>
-		<p>Hi, I'm Pragathi.</p>
-		<p>
-			I have spent the past 10 years building software, intelligent systems and digital products,
-			from embedded engineering and applied AI to mobile applications, backend systems and complete
-			product releases.
-		</p>
-		<p>
-			Before working independently, I held engineering roles at Bosch and Mercedes-Benz. My work
-			covered computer vision, gaze and pose systems, multimodal AI, explainable AI, transformer and
-			speech-based solutions, and the data and evaluation infrastructure underneath them. I studied
-			Communication Engineering at TU Munich and completed my thesis on applying AI to radar.
-		</p>
-		<p>
-			Today, I divide my time between building Anovi and taking on selected consulting and freelance
-			projects across applied AI, software engineering and product development.
-		</p>
-		<p>
-			I started Anovi because of a gap I kept running into: nutrition advice is often accurate and
-			rarely usable. It does not account for what is already in your kitchen, what is expiring, what
-			you have time to cook or what you actually enjoy eating. The interesting problem was never
-			simply the model. It was translating evidence into a decision someone could make on a Tuesday
-			evening.
-		</p>
-		<p>
-			Building Anovi independently meant taking responsibility for the entire product: the
-			architecture, database schema, recommendation logic, LLM pipeline, mobile experience,
-			payments, localisation, privacy work and release on the App Store and Google Play.
-		</p>
-		<p>
-			That range is why this site exists. Building across disciplines taught me things worth
-			documenting, and many of them are not the polished lessons that make it into conference talks.
-		</p>
-		<p>
-			What I write here follows one rule: every claim has a receipt. When there is an upstream issue,
-			I link to it. When there is not, I show the reproduction, measurement or control that supports
-			the conclusion. That includes the approaches I abandoned, the systems that failed and the
-			detectors that produced false positives.
-		</p>
-		<p>
-			I write for people who care not only about whether technology works, but why it works, where
-			it breaks and what it takes to make it dependable.
-		</p>
+	<div class="body">
+		<div class="prose">
+			<p>
+				Before working independently, I held engineering roles at Bosch and Mercedes-Benz. My work
+				covered computer vision, gaze and pose systems, multimodal AI, explainable AI, transformer and
+				speech-based solutions, and the data and evaluation infrastructure underneath them. I studied
+				Communication Engineering at TU Munich and completed my thesis on applying AI to radar.
+			</p>
+			<p>
+				Today, I divide my time between building Anovi and taking on selected consulting and
+				freelance projects across applied AI, software engineering and product development.
+			</p>
+			<p>
+				I started Anovi because of a gap I kept running into: nutrition advice is often accurate
+				and rarely usable. It does not account for what is already in your kitchen, what is
+				expiring, what you have time to cook or what you actually enjoy eating. The interesting
+				problem was never simply the model. It was translating evidence into a decision someone
+				could make on a Tuesday evening.
+			</p>
+			<p>
+				Building Anovi independently meant taking responsibility for the entire product: the
+				architecture, database schema, recommendation logic, LLM pipeline, mobile experience,
+				payments, localisation, privacy work and release on the App Store and Google Play.
+			</p>
+			<p>
+				That range is why this site exists. Building across disciplines taught me things worth
+				documenting, and many of them are not the polished lessons that make it into conference
+				talks.
+			</p>
+			<p>
+				What I write here follows one rule: every claim has a receipt. When there is an upstream
+				issue, I link to it. When there is not, I show the reproduction, measurement or control that
+				supports the conclusion. That includes the approaches I abandoned, the systems that failed
+				and the detectors that produced false positives.
+			</p>
+			<p>
+				I write for people who care not only about whether technology works, but why it works,
+				where it breaks and what it takes to make it dependable.
+			</p>
+		</div>
+
+		<aside class="facts-wrap">
+			<dl class="facts card">
+				{
+					FACTS.map(([label, value]) => (
+						<div>
+							<dt>{label}</dt>
+							<dd>{value}</dd>
+						</div>
+					))
+				}
+			</dl>
+		</aside>
 	</div>
-
-	<dl class="facts">
-		{
-			FACTS.map(([label, value]) => (
-				<div>
-					<dt>{label}</dt>
-					<dd>{value}</dd>
-				</div>
-			))
-		}
-	</dl>
-
-	<p class="links">
-		<a href={`mailto:${CONTACT_EMAIL}`}>Email</a>
-		<a href={SOCIAL.github} rel="me noopener">GitHub</a>
-		<a href={SOCIAL.linkedin} rel="me noopener">LinkedIn</a>
-	</p>
 </Base>
 
 <style>
-	/* shape-outside lets the lines hug the circle instead of its bounding box,
-	   which otherwise leaves dead corners beside a round portrait. */
-	.portrait {
-		float: left;
-		width: 160px;
-		height: 160px;
-		border-radius: 50%;
-		object-fit: cover;
-		shape-outside: circle(50%);
-		shape-margin: 1rem;
-		margin: 0.35rem 1.5rem 1rem 0;
+	.hero {
+		display: grid;
+		grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+		gap: 2.5rem;
+		align-items: center;
+		margin-bottom: 3.5rem;
 	}
 
-	/* A 160px float leaves too little text width on a phone. */
-	@media (max-width: 30rem) {
-		.portrait {
-			float: none;
-			shape-outside: none;
-			margin: 0 0 1.5rem;
-		}
+	.hero h1 {
+		font-size: clamp(2rem, 4.5vw, 3rem);
+		margin: 0.35rem 0 0.75rem;
+	}
+
+	.sub {
+		color: var(--muted);
+		font-size: var(--step-1);
+		max-width: 36rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.hero-visual {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 260px;
+	}
+
+	.halo {
+		position: absolute;
+		width: 260px;
+		height: 260px;
+		border-radius: 50%;
+		background: var(--tint);
+	}
+
+	.portrait {
+		position: relative;
+		width: 200px;
+		height: 200px;
+		border-radius: 50%;
+		object-fit: cover;
+		border: 4px solid var(--bg);
+		box-shadow: 0 10px 30px rgb(0 0 0 / 0.12);
+	}
+
+	.body {
+		display: grid;
+		grid-template-columns: minmax(0, 3fr) minmax(16rem, 2fr);
+		gap: 3rem;
+		align-items: start;
+	}
+
+	.prose {
+		font-size: var(--step-0);
+	}
+
+	.facts-wrap {
+		position: sticky;
+		top: 1.5rem;
 	}
 
 	.facts {
-		margin: 2.5rem 0;
-		border-top: 1px solid var(--hairline);
+		margin: 0;
 	}
 
 	.facts div {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.25rem 1rem;
 		padding-block: 0.6rem;
 		border-bottom: 1px solid var(--hairline);
 	}
 
+	.facts div:last-child {
+		border-bottom: 0;
+		padding-bottom: 0;
+	}
+
+	.facts div:first-child {
+		padding-top: 0;
+	}
+
 	dt {
-		flex: 0 0 9rem;
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
 		color: var(--muted);
-		font-size: 0.9375rem;
+		margin-bottom: 0.15rem;
 	}
 
 	dd {
 		margin: 0;
-		flex: 1 1 16rem;
+		font-size: 0.9375rem;
 	}
 
-	.links {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1.5rem;
-		font-size: 0.9375rem;
+	@media (max-width: 48rem) {
+		.hero,
+		.body {
+			grid-template-columns: 1fr;
+		}
+
+		.hero-visual {
+			order: -1;
+			min-height: 200px;
+		}
+
+		.halo {
+			width: 200px;
+			height: 200px;
+		}
+
+		.portrait {
+			width: 150px;
+			height: 150px;
+		}
+
+		.facts-wrap {
+			position: static;
+		}
 	}
 </style>

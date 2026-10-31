@@ -1,37 +1,173 @@
 ---
 import Base from '../layouts/Base.astro';
-import { CONTACT_EMAIL } from '../consts';
-import { OFFERS, SHAPES } from '../data/services';
+import Button from '../components/Button.astro';
+import HeroArt from '../components/HeroArt.astro';
+import Icon from '../components/Icon.astro';
+import ProofStrip from '../components/ProofStrip.astro';
+import { CONTACT_EMAIL, SOCIAL } from '../consts';
+import { CALL, FAQ, OFFERS, PACKAGES, SHAPES, STEPS } from '../data/services';
+
+const mailto = (subject: string) => `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`;
 ---
 
 <Base
 	title="Work with me"
-	description="Mobile products from concept to live on the App Store and Google Play. Concept-to-launch builds, finish-and-launch takeovers and launch readiness reviews, plus production AI and backend systems."
+	description="Mobile products from concept to live on the App Store and Google Play. Fixed-scope reviews, fixes, upgrades, subscriptions, AI features and security reviews for React Native apps."
+	wide
 >
-	<h1>Work with me</h1>
-	<div class="intro">
-		<p>
-			I take mobile products from concept to a live listing on the App Store and Google Play, and I
-			take over products that are stuck on the way there.
-		</p>
-		<p>
-			In 2026 I built and launched Anovi on my own: the PostgreSQL schema and FastAPI backend, the
-			React Native app, an LLM pipeline, subscriptions on both stores, German and English, the GDPR
-			work a health-adjacent app needs in the EU, and both store submissions. Apple approved it on
-			the first submission. Before that I spent seven years at Bosch and Mercedes-Benz building
-			embedded and applied AI systems with other people's deadlines attached.
-		</p>
-		<p>Most of what I am asked for falls into one of three shapes.</p>
-	</div>
+	<section class="hero">
+		<div class="hero-copy">
+			<p class="eyebrow">Work with me</p>
+			<h1>Get your app live on both stores.</h1>
+			<p class="sub">
+				Reviews, fixes and builds from someone who has taken her own app from an empty schema to a
+				live listing on the App Store and Google Play. Fixed scope, written results, no surprises.
+			</p>
+			<div class="actions">
+				<Button href={mailto('About my app')} primary icon="arrow">Email me</Button>
+				<Button href={mailto('Book a call')} icon="calendar">Book a call</Button>
+			</div>
+		</div>
+		<div class="hero-visual">
+			<HeroArt />
+		</div>
+	</section>
 
-	{
-		SHAPES.map((shape) => (
-			<section>
-				<h2>{shape.title}</h2>
-				<p>{shape.description}</p>
-			</section>
-		))
-	}
+	<ProofStrip />
+
+	<section class="shapes">
+		<h2>Three ways to work together</h2>
+		<div class="grid-3">
+			{
+				SHAPES.map((shape) => (
+					<article class="card shape">
+						{shape.icon && (
+							<span class="icon-badge">
+								<Icon name={shape.icon} size={22} />
+							</span>
+						)}
+						<h3>{shape.title}</h3>
+						<p>{shape.description}</p>
+						{shape.tag && <p class="tag">{shape.tag}</p>}
+					</article>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="call card" id="call">
+		<div class="call-head">
+			<div>
+				<p class="eyebrow">Consultation</p>
+				<h2>{CALL.title}</h2>
+				<p class="muted">{CALL.intro}</p>
+			</div>
+			<div class="call-price">
+				<span class="price">{CALL.price}</span>
+				<span class="meta">{CALL.duration}</span>
+				<Button href={mailto('Book a call')} primary icon="calendar">Book a call</Button>
+			</div>
+		</div>
+		<div class="grid-2 call-types">
+			{
+				CALL.types.map((type) => (
+					<div class="call-type">
+						<Icon name={type.icon} size={22} />
+						<div>
+							<h3>{type.title}</h3>
+							<p>{type.description}</p>
+						</div>
+					</div>
+				))
+			}
+		</div>
+		<p class="muted small">{CALL.closing}</p>
+	</section>
+
+	<section class="packages" id="packages">
+		<h2>Fixed-scope packages</h2>
+		<p class="lead">
+			Most of the requests I get are one of these. Each is a fixed scope with a written result, and
+			each is something I have been through with my own app before offering it to yours. If yours
+			does not fit neatly, write to me anyway and we will find the shape together.
+		</p>
+		<div class="grid-2">
+			{
+				PACKAGES.map((pkg) => (
+					<article class="card package" id={pkg.id}>
+						<div class="package-head">
+							<span class="icon-badge">
+								<Icon name={pkg.icon} size={22} />
+							</span>
+							<span class="eyebrow">{pkg.category}</span>
+						</div>
+						<h3>{pkg.title}</h3>
+						<p class="summary">{pkg.summary}</p>
+						<dl class="facts">
+							<div>
+								<dt>Takes</dt>
+								<dd>{pkg.duration}</dd>
+							</div>
+							<div>
+								<dt>Price</dt>
+								<dd class="price">{pkg.price}</dd>
+							</div>
+						</dl>
+						<details>
+							<summary>What is included</summary>
+							<p>{pkg.description}</p>
+						</details>
+						<a class="package-cta" href={mailto(pkg.title)}>
+							Ask about this
+							<Icon name="arrow" size={16} />
+						</a>
+					</article>
+				))
+			}
+		</div>
+		<p class="muted packages-note">
+			{
+				SOCIAL.upwork ? (
+					<>
+						Prefer escrow and milestones? Every package is also available through my{' '}
+						<a href={SOCIAL.upwork} rel="me noopener">
+							Upwork profile
+						</a>
+						.
+					</>
+				) : (
+					'Prices are starting points for a typical Expo app; larger apps get a quote after a short scope call.'
+				)
+			}
+		</p>
+	</section>
+
+	<section class="steps">
+		<h2>How it works</h2>
+		<ol class="grid-3">
+			{
+				STEPS.map((step, i) => (
+					<li>
+						<span class="step-no">{i + 1}</span>
+						<h3>{step.title}</h3>
+						<p>{step.description}</p>
+					</li>
+				))
+			}
+		</ol>
+	</section>
+
+	<section class="faq">
+		<h2>Questions people ask</h2>
+		{
+			FAQ.map((item) => (
+				<details>
+					<summary>{item.question}</summary>
+					<p>{item.answer}</p>
+				</details>
+			))
+		}
+	</section>
 
 	<section class="also">
 		<h2>Also</h2>
@@ -46,46 +182,355 @@ import { OFFERS, SHAPES } from '../data/services';
 		</ul>
 	</section>
 
-	<section>
-		<h2>How an engagement starts</h2>
-		<p>
-			Email me a short description of the product, where it stands and the outcome you need. I
-			reply within two working days with questions or a scoped proposal. Reviews and launches are
-			fixed scope; builds are milestone or hourly. I work remote from Germany, in English, under a
-			written agreement with IP assigned to you.
-		</p>
+	<section class="closing card">
+		<div>
+			<h2>Tell me where your app stands.</h2>
+			<p class="muted">
+				A few sentences are enough. I reply within two working days, in English, from Germany.
+			</p>
+		</div>
+		<div class="actions">
+			<Button href={mailto('About my app')} primary icon="mail">{CONTACT_EMAIL}</Button>
+		</div>
 	</section>
-
-	<p class="cta">
-		<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-	</p>
 </Base>
 
 <style>
-	.intro {
-		margin-bottom: 2.5rem;
+	h2 {
+		font-size: var(--step-2);
+		margin-bottom: 1rem;
 	}
 
-	.intro p:last-child {
-		margin-bottom: 0;
+	h3 {
+		font-size: var(--step-1);
+		margin-bottom: 0.35rem;
+	}
+
+	.muted {
+		color: var(--muted);
+	}
+
+	.small {
+		font-size: 0.9375rem;
+	}
+
+	.lead {
+		color: var(--muted);
+		max-width: 46rem;
+		margin-bottom: 1.5rem;
 	}
 
 	section {
-		padding-bottom: 1.5rem;
-		margin-bottom: 1.5rem;
-		border-bottom: 1px solid var(--hairline);
+		margin-bottom: 4rem;
 	}
 
-	h2 {
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.grid-2,
+	.grid-3 {
+		display: grid;
+		gap: 1.25rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.grid-2 {
+		grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+	}
+
+	.grid-3 {
+		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+	}
+
+	.icon-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 10px;
+		background: var(--tint);
+		color: var(--accent);
+	}
+
+	/* Hero */
+	.hero {
+		display: grid;
+		grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+		gap: 2.5rem;
+		align-items: center;
+		margin-bottom: 2.5rem;
+	}
+
+	.hero h1 {
+		font-size: clamp(2rem, 4.5vw, 3rem);
+		margin: 0.35rem 0 0.75rem;
+	}
+
+	.hero .sub {
 		font-size: var(--step-1);
+		color: var(--muted);
+		max-width: 34rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.hero-visual {
+		display: flex;
+		justify-content: center;
+	}
+
+	@media (max-width: 48rem) {
+		.hero {
+			grid-template-columns: 1fr;
+		}
+
+		.hero-visual {
+			order: -1;
+		}
+	}
+
+	/* Shapes */
+	.shape {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+	}
+
+	.shape h3 {
+		margin: 0.25rem 0 0;
+	}
+
+	.shape p {
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.9375rem;
+	}
+
+	.shape .tag {
+		margin-top: auto;
+		padding-top: 0.75rem;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		color: var(--accent);
+	}
+
+	/* Call card */
+	.call {
+		background: var(--tint);
+		border-color: transparent;
+		padding: 2rem;
+	}
+
+	.call-head {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 1.5rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.call-head h2 {
 		margin-bottom: 0.4rem;
 	}
 
-	section p {
+	.call-head .muted {
+		max-width: 34rem;
+		margin: 0;
+	}
+
+	.call-price {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.25rem;
+	}
+
+	.call-price .btn {
+		margin-top: 0.5rem;
+	}
+
+	.price {
+		font-family: var(--font-serif);
+		font-size: var(--step-2);
+		font-weight: 600;
+		color: var(--ink);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.call-type {
+		display: flex;
+		gap: 0.85rem;
+		padding: 1rem 1.1rem;
+		border-radius: 10px;
+		background: var(--bg);
+	}
+
+	.call-type svg {
+		color: var(--accent);
+		flex: none;
+		margin-top: 0.15rem;
+	}
+
+	.call-type h3 {
+		font-family: var(--font-sans);
+		font-size: var(--step-0);
+		margin: 0 0 0.2rem;
+	}
+
+	.call-type p {
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.9375rem;
+	}
+
+	.call .small {
+		margin: 1.25rem 0 0;
+	}
+
+	/* Packages */
+	.package {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.package-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.package h3 {
+		margin: 0;
+	}
+
+	.package .summary {
 		margin: 0;
 		color: var(--muted);
 	}
 
+	.facts {
+		display: flex;
+		gap: 2rem;
+		margin: 0.25rem 0 0;
+		padding: 0.75rem 0;
+		border-top: 1px solid var(--hairline);
+		border-bottom: 1px solid var(--hairline);
+	}
+
+	.facts div {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.facts dt {
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--muted);
+	}
+
+	.facts dd {
+		margin: 0;
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.facts .price {
+		font-size: var(--step-1);
+	}
+
+	details summary {
+		cursor: pointer;
+		font-weight: 600;
+		color: var(--accent);
+		list-style: none;
+	}
+
+	details summary::-webkit-details-marker {
+		display: none;
+	}
+
+	details summary::before {
+		content: '+';
+		display: inline-block;
+		width: 1.1rem;
+	}
+
+	details[open] summary::before {
+		content: '−';
+	}
+
+	details p {
+		margin: 0.6rem 0 0;
+		color: var(--muted);
+		font-size: 0.9375rem;
+	}
+
+	.package-cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		margin-top: auto;
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	.package-cta:hover {
+		text-decoration: underline;
+	}
+
+	.packages-note {
+		margin: 1.5rem 0 0;
+		font-size: 0.9375rem;
+	}
+
+	/* Steps */
+	.steps li {
+		position: relative;
+		padding: 1.25rem 1.25rem 1.25rem 1.25rem;
+		border-left: 2px solid var(--accent);
+	}
+
+	.step-no {
+		display: inline-block;
+		font-family: var(--font-serif);
+		font-size: var(--step-2);
+		color: var(--accent);
+		margin-bottom: 0.25rem;
+	}
+
+	.steps h3 {
+		font-family: var(--font-sans);
+		font-size: var(--step-0);
+	}
+
+	.steps p {
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.9375rem;
+	}
+
+	/* FAQ */
+	.faq details {
+		padding: 0.9rem 0;
+		border-bottom: 1px solid var(--hairline);
+	}
+
+	.faq details:first-of-type {
+		border-top: 1px solid var(--hairline);
+	}
+
+	.faq summary {
+		color: var(--ink);
+	}
+
+	/* Also */
 	.also ul {
 		margin: 0;
 		padding-left: 1.1rem;
@@ -101,9 +546,22 @@ import { OFFERS, SHAPES } from '../data/services';
 		font-weight: 600;
 	}
 
-	.cta {
-		font-family: var(--font-serif);
-		font-size: var(--step-1);
-		margin-top: 0;
+	/* Closing */
+	.closing {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		padding: 2rem;
+		margin-bottom: 0;
+	}
+
+	.closing h2 {
+		margin-bottom: 0.35rem;
+	}
+
+	.closing p {
+		margin: 0;
 	}
 </style>

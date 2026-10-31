@@ -30,6 +30,14 @@ export const PROJECTS: Project[] = [
 				src: '/media/anovi/cook-me-quick.webp',
 				alt: 'Recipes ranked by pantry match, with soon-to-expire ingredients flagged',
 			},
+			{
+				src: '/media/anovi/weekly-plan.webp',
+				alt: 'A week of meals scored day by day against calorie, macro and wellness targets',
+			},
+			{
+				src: '/media/anovi/recipe-detail.webp',
+				alt: 'A recipe page with prep time, satiety and the share of ingredients already in the pantry',
+			},
 		],
 		links: [
 			{ href: 'https://apps.apple.com/de/app/id6761064126', label: 'App Store' },
@@ -137,7 +145,7 @@ export const EXPERIENCE: Role[] = [
 ];
 
 export const BUILDING: string[] = [
-	'Anovi 1.0.2. Subscription offer codes on both stores and a reworked acquisition step, in store review.',
+	'Anovi 1.0.3. Moving the meal-logging pipeline to the next model generation and hardening the backend after the 1.0.2 release, which shipped subscription offer codes on both stores.',
 	'Evidence-Grounded Nutrition Research Copilot. Retrieval and citation design for nutrition evidence, built to refuse questions the sources cannot answer.',
 	'Cycle-aware nutrition flow. Symptom and phase aware planning, scoped to stay non-medical.',
 ];

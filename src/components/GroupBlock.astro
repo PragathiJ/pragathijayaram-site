@@ -1,5 +1,6 @@
 ---
 import ArticleRow, { type Row } from './ArticleRow.astro';
+import Icon, { type IconName } from './Icon.astro';
 import type { Group } from '../data/groups';
 
 interface Props {
@@ -7,41 +8,91 @@ interface Props {
 	rows: Row[];
 }
 
+const ICONS: Record<string, IconName> = {
+	'ai-that-has-to-be-right': 'nodes',
+	'production-engineering': 'layers',
+	'building-in-a-regulated-space': 'shield',
+};
+
 const { group, rows } = Astro.props;
 const published = rows.filter((row) => row.href);
 const upcoming = rows.filter((row) => !row.href);
+const icon = ICONS[group.id] ?? 'layers';
 ---
 
-<section id={group.id}>
-	<h2>{group.name}</h2>
-	<p class="blurb">{group.blurb}</p>
-	{published.map((row) => <ArticleRow {...row} />)}
-	{
-		upcoming.length > 0 && (
-			<>
-				<p class="upcoming">Upcoming</p>
-				{upcoming.map((row) => (
-					<ArticleRow {...row} />
-				))}
-			</>
-		)
-	}
+<section id={group.id} class="group">
+	<div class="head">
+		<span class="icon-badge">
+			<Icon name={icon} size={22} />
+		</span>
+		<div>
+			<h2>{group.name}</h2>
+			<p class="blurb">{group.blurb}</p>
+		</div>
+		<span class="count">{published.length} {published.length === 1 ? 'article' : 'articles'}</span>
+	</div>
+	<div class="card rows">
+		{published.map((row) => <ArticleRow {...row} />)}
+		{
+			upcoming.length > 0 && (
+				<>
+					<p class="upcoming">Upcoming</p>
+					{upcoming.map((row) => (
+						<ArticleRow {...row} />
+					))}
+				</>
+			)
+		}
+	</div>
 </section>
 
 <style>
-	section {
+	.group {
 		margin-bottom: 3.5rem;
 	}
 
+	.head {
+		display: flex;
+		align-items: flex-start;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.icon-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex: none;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 10px;
+		background: var(--tint);
+		color: var(--accent);
+	}
+
 	h2 {
-		border-bottom: 2px solid var(--ink);
-		padding-bottom: 0.35rem;
-		margin-bottom: 0.5rem;
+		font-size: var(--step-2);
+		margin-bottom: 0.25rem;
 	}
 
 	.blurb {
 		color: var(--muted);
-		margin-bottom: 1rem;
+		margin: 0;
+		max-width: 40rem;
+	}
+
+	.count {
+		margin-left: auto;
+		flex: none;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		color: var(--muted);
+		padding-top: 0.6rem;
+		white-space: nowrap;
+	}
+
+	.rows {
+		padding-block: 0.25rem;
 	}
 
 	.upcoming {
@@ -50,7 +101,13 @@ const upcoming = rows.filter((row) => !row.href);
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 		color: var(--muted);
-		margin-top: 1.75rem;
+		margin-top: 1.5rem;
 		margin-bottom: 0.25rem;
+	}
+
+	@media (max-width: 34rem) {
+		.count {
+			display: none;
+		}
 	}
 </style>

@@ -40,6 +40,8 @@ export const NAV = [
 export const SOCIAL = {
 	github: 'https://github.com/PragathiJ',
 	linkedin: 'https://www.linkedin.com/in/pragathi-jayaram/',
+	// Fill in once the Upwork profile URL is known; empty hides every Upwork link.
+	upwork: '',
 } as const;
 
 export const FOOTER_LINKS = [
